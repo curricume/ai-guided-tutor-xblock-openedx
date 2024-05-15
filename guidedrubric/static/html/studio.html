@@ -23,42 +23,6 @@
 <div class="wrapper-comp-settings is-active editor-with-buttons" id="settings-tab">
     <form id="guided_rubric_form" action="">
         <ul class="list-input settings-list">
-
-            <li class="field comp-setting-entry is-set">
-                <div class="wrapper-comp-setting">
-                    <label class="label setting-label" for="assistant_name">{% trans field_assistant_name.display_name %}</label>
-                    <input class="input setting-input" name="assistant_name" id="assistant_name" value="{{ guided_rubric_xblock.assistant_name }}" type="text" />
-                </div>
-                <span class="tip setting-help">{% trans field_assistant_name.help %}</span>
-            </li>
-
-            <li class="field comp-setting-entry is-set">
-            <div class="wrapper-comp-setting">
-                <label class="label setting-label" for="assistant_instructions">{% trans field_assistant_instructions.display_name %}</label>
-                <input class="input setting-input" name="assistant_instructions" id="assistant_instructions" value="{{ guided_rubric_xblock.assistant_instructions }}" type="text" />
-            </div>
-            <span class="tip setting-help">{% trans field_assistant_instructions.help %}</span>
-        </li>
-
-        <li class="field comp-setting-entry is-set">
-            <div class="wrapper-comp-setting">
-                <label class="label setting-label" for="assistant_model">{% trans field_assistant_model.display_name %}</label>
-                <input class="input setting-input" name="assistant_model" id="assistant_model" value="gpt-4-turbo-preview" type="text" disabled />
-            </div>
-            <span class="tip setting-help">{% trans field_assistant_model.help %}</span>
-        </li>
-
-        <li class="field comp-setting-entry is-set">
-            <div class="wrapper-comp-setting">
-                <label class="label setting-label" for="knowledge_base">{% trans "Knowledge Base" %}</label>
-                <input class="input setting-input" name="knowledge_base" id="knowledge_base" type="file" accept="application/zip" />
-            </div>
-
-            {% if guided_rubric_xblock.knowledge_base %}
-            <span class="tip setting-help setting-input-file"><span>{% trans "Currently:" %}</span> {{ guided_rubric_xblock.knowledge_base }}</span>
-            {% endif %}
-
-        </li>
         
         <li class="field comp-setting-entry is-set">
             <div class="wrapper-comp-setting">
@@ -79,7 +43,7 @@
         <li class="field comp-setting-entry is-set">
             <div class="wrapper-comp-setting">
                 <label class="label setting-label" for="assistant_id">{% trans field_assistant_id.display_name %}</label>
-                <input class="input setting-input" name="assistant_id" id="assistant_id" value="{{ guided_rubric_xblock.assistant_id }}" type="text" disabled />
+                <input class="input setting-input" name="assistant_id" id="assistant_id" value="{{ guided_rubric_xblock.assistant_id }}" type="text" />
             </div>
             <span class="tip setting-help">{% trans field_assistant_id.help %}</span>
         </li>
