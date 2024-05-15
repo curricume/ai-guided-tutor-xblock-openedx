@@ -241,8 +241,8 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
     # TO-DO: delete count, and define your own fields.
 
     display_name = String(
-        display_name = "Display Name",
-        default="XBlock Name",
+        display_name = "Guided Rubric",
+        default="Guided Rubric",
         scope=Scope.settings
     )
 
