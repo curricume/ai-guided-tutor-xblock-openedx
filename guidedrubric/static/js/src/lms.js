@@ -264,6 +264,12 @@ function GuidedRubricXBlock(runtime, element) {
                 } else {
                     $('.chat-input').css('display', 'block');
                     $('.micro-ai-btn-container').css('display', '');
+                    let p = document.createElement('p');
+                    p.classList.add('notification-btm');
+                    p.textContent = "You have not achieved a passing score for this phase. Please enter another response and submit again.";
+                    p.style.color = 'black';
+                    p.style.backgroundColor = '#ff000052';
+                    document.querySelectorAll('.chatgpt_wrapper')[document.querySelectorAll('.chatgpt_wrapper').length - 1].appendChild(p);
                 }
             }
         }
