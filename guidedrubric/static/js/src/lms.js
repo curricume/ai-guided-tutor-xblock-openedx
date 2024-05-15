@@ -256,45 +256,75 @@ function GuidedRubricXBlock(runtime, element) {
     function type_message(data) {
         var pElements = document.querySelectorAll('.ai-msg p');
         let pElement = pElements[pElements.length - 1];
-
-        pElement.textContent = '';
-        chunks = data[4]
     
-        // This function will be called recursively with a delay to simulate streaming
-        function displayNextChunk(index) {
-            if (index < chunks.length) {
+        pElement.innerHTML = '';  // Use innerHTML to preserve HTML formatting
+        let text = data[0];       // Get the input text
+    
+        // Function to preprocess text and replace markers with HTML tags
+        function preprocessText(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Replace **text** with <strong>text</strong>
+                .replace(/\n/g, '<br>'); // Replace newlines with <br>
+        }
+
+        // Preprocess the text
+        let processedText = preprocessText(text);
+    
+        // Function to simulate streaming by displaying text chunk by chunk
+        function displayNextChunk(index, processedText) {
+            if (index < processedText.length) {
                 // Append the current chunk to the aiMsg element
-                let current_text = pElement.textContent;
-                let new_text = current_text + chunks[index];
-                pElement.textContent = new_text; 
-                
+                pElement.innerHTML = processedText.slice(0, index + 1);  // Update innerHTML to preserve formatting
+    
                 // Call this function again for the next chunk after a short delay
-                setTimeout(() => displayNextChunk(index + 1), 100); // Adjust delay as needed
+                setTimeout(() => displayNextChunk(index + 1, processedText), 10); // Adjust delay as needed
             } else {
                 // Once all chunks are displayed, make the input field visible again
-                if (data[1] == 'Success' || data[1]==null)
-                {
-                    if (data[2]){
-                        $('#send-btn').text(data[3])
+                if (data[1] === 'Success' || data[1] === null) {
+                    if (data[2]) {
+                        $('#send-btn').text(data[3]);
                     }
                 }
-                if (data[3] == null){
+                if (data[3] === null) {
                     let p = document.createElement('p');
                     p.classList.add('notification-btm');
                     p.textContent = data[5];
                     document.querySelectorAll('.chatgpt_wrapper')[document.querySelectorAll('.chatgpt_wrapper').length - 1].appendChild(p);
-                } else{
+                } else {
                     $('.chat-input').css('display', 'block');
-                    $('.micro-ai-btn-container').css('display', '')
+                    $('.micro-ai-btn-container').css('display', '');
+                    let p = document.createElement('p');
+                    p.classList.add('notification-btm');
+                    p.textContent = "You have not achieved a passing score for this phase. Please enter another response and submit again.";
+                    p.style.color = 'black';
+                    p.style.backgroundColor = '#ff000052';
+                    document.querySelectorAll('.chatgpt_wrapper')[document.querySelectorAll('.chatgpt_wrapper').length - 1].appendChild(p);
                 }
             }
         }
     
         // Start displaying chunks from the first one
-        displayNextChunk(0);
+        displayNextChunk(0, processedText);
     }
     $(function ($) {
         initReports();
+        pElements = document.querySelectorAll('.ai-msg p');
+        pElements.forEach(function(pElement) {
+            let text = pElement.textContent;
+    
+            // Function to preprocess text and replace markers with HTML tags
+            function preprocessText(text) {
+                return text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Replace **text** with <strong>text</strong>
+                    .replace(/\n/g, '<br>'); // Replace newlines with <br>
+            }
+    
+            // Preprocess the text
+            let processedText = preprocessText(text);
+    
+            // Set the entire processed text at once
+            pElement.innerHTML = processedText;
+        });
         /* Here's where you'd do things on page load. */
     });
 
