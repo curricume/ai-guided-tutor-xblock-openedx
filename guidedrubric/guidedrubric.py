@@ -577,7 +577,11 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
         return compiled_instructions
 
-    
+    @XBlock.json_handler
+    def reset_user_responses(self, data, suffix=''):
+        self.user_response = {}
+        return {"result": "success", "errors": []}
+
     def handle_assistant_interaction(self, index, manager, user_input):
         manager.add_message_to_thread(
             role="user", content=user_input
