@@ -400,6 +400,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         self.last_phase_id = request.params["last_phase_id"]
         self.completion_message = request.params["completion_message"]
         self.max_tokens_per_user = request.params["max_tokens_per_user"]
+        self.assistant_id = request.params["assistant_id"]
 
         response = {"result": "success", "errors": []}
         return self.json_response(response)
