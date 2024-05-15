@@ -17,31 +17,22 @@
 </div>
 <div class="gudied-critical-analysis-container">
         <div class="guided-critical-analysis-header">
-            <h1>Guided Critical Analysis</h1>
-            <p>In this guided article review, we'll both read the same journal article. Then, you'll be guided through
-                an
-                analysis of the paper. Let's begin by reading the paper!</p>
+            {% if guided_rubric_xblock.display_name %}
+            <h1>{{guided_rubric_xblock.display_name}}</h1>
+            {% endif %}
+            {% if guided_rubric_xblock.short_description %}
+            <p>{{guided_rubric_xblock.short_description}}</p>
+            {% endif %}
         </div>
         <div class="guided-critical-analysis-body">
-            {% if guided_rubric_xblock.zip_file %}
-            <div class="micro-ai-btn-primary"> <a
-                    href="{{guided_rubric_xblock.zip_file}}" target="_blank"><button>View PDF</button></a>
-            </div>
-            {% else %}
-            <div class="micro-ai-btn-primary"> <a
-                    href="http://up.csail.mit.edu/other-pubs/las2014-pguo-engagement.pdf" target="_blank"><button>View PDF</button></a>
-            </div>
-            {% endif %}
-            
             <div class="demo-text">
-                <p>This is a <span>DEMO</span>, so sample answers are <span> pre-filled </span></p>
             </div>
             <div class="prompt-accordion">
                 <div class="accordion">
                     <div class="accordion-item">
-                        <div class="accordion-item-header">
+                        <div class="accordion-item-header" onclick="ShowInstructions()">
                             <span class="accordion-item-header-title">Learn how it works</span>
-                            <svg onclick="ShowInstructions()" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-down accordion-item-header-icon">
                                 <path d="m6 9 6 6 6-6"></path>

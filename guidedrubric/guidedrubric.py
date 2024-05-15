@@ -240,13 +240,17 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
     # TO-DO: delete count, and define your own fields.
 
-    
+    display_name = String(
+        display_name = "Guided Rubric",
+        default="Guided Rubric",
+        scope=Scope.settings
+    )
 
-    assistant_name = String(
-        display_name=_("Assistant Name"),
-        help=_("Assistan Name"),
-        default="",
+    short_description =  String(
+        display_name=_("Short Description"),
+        default="Short Description",
         scope=Scope.settings,
+        help=_("Short Description")
     )
 
     phases = String(
@@ -294,40 +298,11 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         help=_("Define how many time a user can make prompts")
     )
 
-    assistant_instructions = String(
-        display_name=_("Assistant Instructions"),
-        help=_("Assistant Instructions"),
-        default="",
-        scope=Scope.settings,
-    )
-
     # Non-editable model field for ChatGPT version
-    assistant_model = String(
-        display_name=_("Model"),
-        help=_("The version of ChatGPT currently used by the XBlock"),
-        default="gpt-4-turbo-preview",
-        scope=Scope.content,
-        edit=False,
-    )
 
     assistant_id = String(
         display_name=_("Assistant ID"),
         help=_("This ID will be auto-generated"),
-        default="",
-        scope=Scope.content,
-        edit=False,
-    )
-
-    knowledge_base =  String(
-        display_name=_("Knowledge Base"),
-        help=_("Knowledge Base"),
-        default="",
-        scope=Scope.settings,
-    )
-
-    zip_file =  String(
-        display_name=_("zip_file"),
-        help=_("zip_file"),
         default="",
         scope=Scope.settings,
     )
@@ -409,14 +384,12 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
     # TO-DO: change this view to display your data your own way.
     def studio_view(self, context=None):
         studio_context = {
-            "field_assistant_name": self.fields["assistant_name"],
             "field_assistant_id": self.fields["assistant_id"],
-            "field_assistant_instructions": self.fields["assistant_instructions"],
-            "field_assistant_model": self.fields["assistant_model"],
+            "field_display_name": self.fields["display_name"],
+            "field_short_description": self.fields["short_description"],
             "field_completion_message": self.fields["completion_message"],
             "field_completion_token": self.fields["completion_token"],
             "field_max_tokens_per_user": self.fields["max_tokens_per_user"],
-            "field_zip_file":self.fields["zip_file"],
             "guided_rubric_xblock": self
             
         }
@@ -439,135 +412,14 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
     def studio_submit(self, request, _suffix):
         self.phases = json.dumps(json.loads(request.params['phases']))
         self.last_phase_id = request.params["last_phase_id"]
-        self.assistant_name = request.params["assistant_name"]
-        self.assistant_instructions = request.params["assistant_instructions"]
-        self.assistant_model = request.params["assistant_model"]
-        if type(request.params["knowledge_base"]) != str:
-            self.knowledge_base = request.params["knowledge_base"].file._name
         self.completion_message = request.params["completion_message"]
         self.max_tokens_per_user = request.params["max_tokens_per_user"]
+        self.assistant_id = request.params["assistant_id"]
+        self.display_name = request.params["display_name"]
+        self.short_description = request.params["short_description"]
 
-        manager = AssistantManager()
         response = {"result": "success", "errors": []}
-
-        if self.assistant_id:
-            try:
-                client.beta.assistants.update(
-                    self.assistant_id,
-                    instructions=self.assistant_instructions,
-                    name=self.assistant_name,
-                    tools=[{"type": "retrieval"}],  # Assuming this is the tool configuration
-                    model="gpt-4-turbo-preview"
-                )
-                response["message"] = "Assistant updated successfully."
-            except Exception as e:
-                print(e)
-                response["errors"].append("Failed to update the assistant.")
-        else:
-            try:
-                manager.create_assistant(
-                    name=self.assistant_name,
-                    instructions=self.assistant_instructions,
-                    tools=[{"type": "retrieval"}]
-                )
-                self.assistant_id = manager.assistant_id
-                response["message"] = "Assistant created successfully."
-            except Exception as e:
-                print(e)
-                response["errors"].append("Failed to create the assistant.")
-
-        # Handling knowledge base upload and association with the assistant
-        if type(request.params["knowledge_base"]) != str:
-            knowledge_base_file = request.params.get("knowledge_base")
-            if knowledge_base_file:
-                if self.assistant_id:
-                    assistant_files = client.beta.assistants.files.list(
-                            assistant_id=self.assistant_id
-                        )
-                    for file in assistant_files.data:
-                        file_id = file.id
-                        client.beta.assistants.files.delete(
-                            assistant_id=self.assistant_id,
-                            file_id=file_id
-                        )
-                try:
-                    package_file = knowledge_base_file.file
-                    dest_path_2 = os.path.join(self.extract_folder_base_path, knowledge_base_file.filename)
-                    self.storage.save(dest_path_2, package_file)
-                    self.zip_file = settings.LMS_ROOT_URL+'/'+'media'+'/'+dest_path_2
-
-                    extracted_files = self.extract_package(package_file)
-
-                    for file_path in extracted_files:
-                        with open(file_path, 'rb') as file:
-                            uploaded_file = client.files.create(file=file, purpose='assistants')
-
-                        client.beta.assistants.files.create(assistant_id=self.assistant_id, file_id=uploaded_file.id)
-
-                except Exception as e:
-                    print(e)
-                    response["errors"].append("Knowledge base file not provided, or file uploaded is not in zip format.")
-            elif self.zip_file:  # Use previously uploaded file if available
-                try:
-                    pass
-                except Exception as e:
-                    print(e)
-                    response["errors"].append("Failed to associate previously uploaded knowledge base file.")
-
         return self.json_response(response)
-
-    
-    def extract_package(self, package_file):
-        extracted_files = []  # Initialize list to store extracted file paths
-        
-        with zipfile.ZipFile(package_file, "r") as scorm_zipfile:
-            zipinfos = scorm_zipfile.infolist()
-            root_path = None
-            root_depth = -1
-            for zipinfo in zipinfos:
-                depth = len(os.path.split(zipinfo.filename))
-                if depth < root_depth or root_depth < 0:
-                    root_path = os.path.dirname(zipinfo.filename)
-                    root_depth = depth
-
-            for zipinfo in zipinfos:
-                # Extract only files that are below the root
-                if zipinfo.filename.startswith(root_path) and not zipinfo.filename.endswith("/"):
-                    dest_path = os.path.join(
-                        self.extract_folder_path,
-                        os.path.relpath(zipinfo.filename, root_path),
-                    )
-                    dest_path_2 = os.path.join(
-                    settings.MEDIA_ROOT,  # Prepend MEDIA_ROOT to the destination path
-                    self.extract_folder_path,
-                    os.path.relpath(zipinfo.filename, root_path),
-                )
-
-                    self.storage.save(
-                        dest_path,
-                        ContentFile(scorm_zipfile.read(zipinfo.filename)),
-                    )                   
-                    # Append the extracted file path to the list
-                    extracted_files.append(dest_path_2)
-                        
-        # Return the list of extracted file paths
-        return extracted_files
-    
-            
-    @property
-    def extract_folder_path(self):
-        """
-        This path needs to depend on the content of the scorm package. Otherwise,
-        served media files might become stale when the package is update.
-        """
-        return os.path.join(self.extract_folder_base_path)
-    
-    @property
-    def extract_folder_base_path(self):
-        """
-        Path to the folder where packages will be extracted.
-        """
-        return os.path.join(self.scorm_location(), self.location.block_id)
 
 
     def get_phase(self, phase_id):
