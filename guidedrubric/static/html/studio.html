@@ -26,6 +26,21 @@
         
         <li class="field comp-setting-entry is-set">
             <div class="wrapper-comp-setting">
+                <label class="label setting-label" for="display_name">{% trans field_display_name.display_name %}</label>
+                <input class="input setting-input" name="display_name" id="display_name" value="{{ guided_rubric_xblock.display_name }}" type="text" />
+            </div>
+        </li>
+
+        <li class="field comp-setting-entry is-set">
+            <div class="wrapper-comp-setting">
+                <label class="label setting-label" for="short_description">{% trans field_short_description.display_name %}</label>
+                <input class="input setting-input" name="short_description" id="short_description" value="{{ guided_rubric_xblock.short_description }}" type="text" />
+            </div>
+            <span class="tip setting-help">{% trans field_short_description.help %}</span>
+        </li>
+
+        <li class="field comp-setting-entry is-set">
+            <div class="wrapper-comp-setting">
                 <label class="label setting-label" for="completion_message">{% trans field_completion_message.display_name %}</label>
                 <input class="input setting-input" name="completion_message" id="completion_message" value="{{ guided_rubric_xblock.completion_message }}" type="text" />
             </div>

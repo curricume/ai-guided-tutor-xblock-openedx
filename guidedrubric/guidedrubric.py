@@ -240,6 +240,18 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
     # TO-DO: delete count, and define your own fields.
 
+    display_name = String(
+        display_name = "Display Name",
+        default="XBlock Name",
+        scope=Scope.settings
+    )
+
+    short_description =  String(
+        display_name=_("Short Description"),
+        default="Short Description",
+        scope=Scope.settings,
+        help=_("Short Description")
+    )
 
     phases = String(
         scope=Scope.settings,
@@ -373,6 +385,8 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
     def studio_view(self, context=None):
         studio_context = {
             "field_assistant_id": self.fields["assistant_id"],
+            "field_display_name": self.fields["display_name"],
+            "field_short_description": self.fields["short_description"],
             "field_completion_message": self.fields["completion_message"],
             "field_completion_token": self.fields["completion_token"],
             "field_max_tokens_per_user": self.fields["max_tokens_per_user"],
@@ -401,6 +415,8 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         self.completion_message = request.params["completion_message"]
         self.max_tokens_per_user = request.params["max_tokens_per_user"]
         self.assistant_id = request.params["assistant_id"]
+        self.display_name = request.params["display_name"]
+        self.short_description = request.params["short_description"]
 
         response = {"result": "success", "errors": []}
         return self.json_response(response)
