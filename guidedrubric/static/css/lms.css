@@ -382,3 +382,10 @@ div#prompt-with-loader {
         flex-direction: column;
     }
 }
+@media only screen and (max-width: 850px) {
+    .wrap-instructor-info {
+        display: flex;
+        margin-top:10px;
+        margin-left: 4px;
+    }
+    }
