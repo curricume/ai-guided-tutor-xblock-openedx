@@ -12,21 +12,31 @@ function GuidedRubricXBlock(runtime, element) {
             <label class="label setting-label" for="phase_name_`+ block_last_phase_id + `">Phase Name</label>
             <input class="input setting-input phase-input-name" name="phase_name_` + block_last_phase_id +`"id="phase_name_`+ block_last_phase_id +`" value="" type="text" required/>
         </div>
+        <div class="wrapper-rubric">
         <div class="wrapper-comp-setting">
             <label class="label setting-label" for="phase_question_`+block_last_phase_id+`">Question</label>
             <input class="input setting-input phase-input-question" name="phase_question_`+ block_last_phase_id + `" id="phase_question_` +block_last_phase_id +`" value="" type="text" required/>
+        </div>
+        <span class="tip setting-help">The question is to be displayed to the user in this phase.</span>
         </div>
         <div class="wrapper-comp-setting">
             <label class="label setting-label" for="helper_text_`+block_last_phase_id+`">Helper Text</label>
             <input class="input setting-input" id="helper_text_`+block_last_phase_id+`"  value="" type="text"/>
         </div>
+        <div class="wrapper-rubric">
         <div class="wrapper-comp-setting">
             <label class="label setting-label" for="ai_instructions_`+block_last_phase_id+`">AI Instructions</label>
             <input class="input setting-input" id="ai_instructions_`+block_last_phase_id+`"  value="" type="text"/>
         </div>
+        <span class="tip setting-help">The user will give you their name. Welcome them by name.</span>
+        </div>
+        <div class="wrapper-rubric">
         <div class="wrapper-comp-setting">
             <label class="label setting-label" for="scored_question_`+block_last_phase_id+`">Scored Question</label>
             <input type="checkbox" class="input setting-input scored_question" id="scored_question_`+block_last_phase_id+`"/>
+        </div>
+        <span class="tip setting-help">If this is a scored phase, then a rubric must be provided that<br> the AI can use to score a response. 
+        The X-block will extract the <br>total score to determine if the user has met the threshold<br> to move on with their answer</span><br>
         </div>
         <div id="div_rubric_`+block_last_phase_id+`" class="wrapper-comp-setting" style="display:none">
             <div>
@@ -50,10 +60,14 @@ function GuidedRubricXBlock(runtime, element) {
                 <li>0 points - Evidence required to receive no points</li>
                 </ul>
                 <p></p>
-            </div> 
+            </div>
+            <div class="wrapper-rubric">
+            <div class="wrapper-comp-setting"> 
             <label class="label setting-label" for="minimum_score_`+block_last_phase_id+`">Minimum Score</label>
             <input class="input setting-input" id="minimum_score_`+block_last_phase_id+`"   />
-            
+            </div>
+            <span class="tip setting-help">This is the minimum total score that a user must achieve to move past this phase.</span>
+            </div>
         </div>
         <div class="wrapper-comp-setting">
             <label class="label setting-label" for="button_label_`+block_last_phase_id+`">Button Label</label>
