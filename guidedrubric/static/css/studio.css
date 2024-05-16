@@ -38,6 +38,11 @@ li.field.dynamic-entry {
   flex: 1;
 }
 
+.wrapper-rubric{
+  border-top: 1px solid #e5e5e5;
+  padding: 20px 10px;
+}
+
 .comp-remove-btn button {
   background: none;
   border: none;
@@ -81,4 +86,8 @@ li.field.dynamic-entry {
 
 .helper-content ul li, .helper-content p{
   font-size:1rem
+}
+
+.wrapper-comp-settings .list-input.settings-list .setting-help {
+  max-width: 200px;
 }
