@@ -360,6 +360,8 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
             if self.is_last_phase_successful:
                 if phase_id == next_phase_id:
                     return item.get('phase_question')
+            if self.user_response == {} and self.is_last_phase_successful == False:
+                return item.get('phase_question')
 
 
     @staticmethod
