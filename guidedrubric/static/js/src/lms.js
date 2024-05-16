@@ -3,12 +3,14 @@ function GuidedRubricXBlock(runtime, element) {
 
     let sendBtn = document.getElementById('send-btn');
     let skipBtn = document.getElementById('skip-btn');
+    let resetBtn = document.getElementById('reset-responses-button');
 
     var attempted_phase_is_last = null;
     var is_attempted_phase_successful = null;
 
     // Handlers
     var handlerUrl = runtime.handlerUrl(element, 'send_message');
+    var resetHandlerUrl = runtime.handlerUrl(element, 'reset_user_responses');
 
     function is_excercise_finished()
     {
@@ -113,6 +115,33 @@ function GuidedRubricXBlock(runtime, element) {
             aiMsg.textContent = "None";
             send_message("skip");
         });
+    }
+
+    function reset_user_responses() {
+        if (confirm("Do you want to reset the responses?")) {
+            if (!is_staff && completion_token >= max_tokens_per_user) {
+                alert("You cannot reset responses because you have exceeded the maximum number of tokens.");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: resetHandlerUrl,
+                data: JSON.stringify({}),
+                contentType: "application/json",
+                success: function (result) {
+                    alert("User responses have been reset.");
+                    location.reload(); // Reload the page to reflect the changes
+                },
+                error: function (error) {
+                    console.error("Error resetting responses:", error);
+                    alert("An error occurred while resetting responses.");
+                }
+            });
+        }
+    }
+
+    if (resetBtn != null) {
+        resetBtn.addEventListener('click', reset_user_responses);
     }
 
     function keep_user_response(user_input, phase_id, ai_response, attempted_phase_question)
