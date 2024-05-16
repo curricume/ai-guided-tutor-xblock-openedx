@@ -96,7 +96,8 @@ function GuidedRubricXBlock(runtime, element) {
             }
             var chat_message = lastChatMsg.value;
             last_attempted_phase_id = $('#last_attempted_phase_id').val()
-            $('.micro-ai-btn-container').css('display', 'none')
+            $('.micro-ai-btn-container').css('display', 'none');
+            $('#reset-responses-button').css('display', 'none');
             var Notificationelements = document.querySelectorAll('.notification-btm');
             Notificationelements.forEach(function(element) {
                 element.parentNode.removeChild(element);
@@ -291,6 +292,7 @@ function GuidedRubricXBlock(runtime, element) {
                     }
                 }
                 if (data[3] === null) {
+                    $('#reset-responses-button').css('display', '');
                     let p = document.createElement('p');
                     p.classList.add('notification-btm');
                     p.textContent = data[5];
@@ -298,12 +300,15 @@ function GuidedRubricXBlock(runtime, element) {
                 } else {
                     $('.chat-input').css('display', 'block');
                     $('.micro-ai-btn-container').css('display', '');
-                    let p = document.createElement('p');
-                    p.classList.add('notification-btm');
-                    p.textContent = "You have not achieved a passing score for this phase. Please enter another response and submit again.";
-                    p.style.color = 'black';
-                    p.style.backgroundColor = '#ff000052';
-                    document.querySelectorAll('.chatgpt_wrapper')[document.querySelectorAll('.chatgpt_wrapper').length - 1].appendChild(p);
+                    $('#reset-responses-button').css('display', '');
+                    if (data[1] == "Fail" || data[1] == null || data[1] == "None" ) {
+                        let p = document.createElement('p');
+                        p.classList.add('notification-btm');
+                        p.textContent = "You have not achieved a passing score for this phase. Please enter another response and submit again.";
+                        p.style.color = 'black';
+                        p.style.backgroundColor = '#ff000052';
+                        document.querySelectorAll('.chatgpt_wrapper')[document.querySelectorAll('.chatgpt_wrapper').length - 1].appendChild(p);
+                    }
                 }
             }
         }
