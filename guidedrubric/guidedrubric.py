@@ -322,6 +322,10 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
     )
 
+    user_score = Dict(
+        scope=Scope.user_state,
+        default={},
+    )
 
     is_last_phase_successful = Boolean(default=True, scope=Scope.user_state)
 
@@ -554,6 +558,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
             "last_attempted_phase_id": self.last_attempted_phase_id,
             "is_initial_phase": is_initial_phase,
             "block_id": self.scope_ids.usage_id,
+            "user_score": self.user_score,
         }
         lms_context.update(context or {})
         template = self.render_template("static/html/lms.html", lms_context)
@@ -582,6 +587,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
     @XBlock.json_handler
     def reset_user_responses(self, data, suffix=''):
         self.user_response = {}
+        self.user_score = {}
         return {"result": "success", "errors": []}
 
     def handle_assistant_interaction(self, index, manager, user_input):
@@ -619,14 +625,17 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
     def handle_assistant_grading(self, index, manager):
         phase = self.get_phase(self.last_attempted_phase_id)
+        current_phase_id = phase['phase_id']
         if not phase['scored_question']:
             self.last_attempted_phase_id = self.get_next_phase_id()
             self.is_last_phase_successful = True
+            self.user_score[str(current_phase_id)] = 1
             return "Success"
         instructions = self.build_instructions(index, True)
         manager.run_assistant(instructions, True)
         summary = manager.get_summary()
         score = self.extract_score(str(summary))
+        self.user_score[str(current_phase_id)] = int(score)
         phase_state = None
         #If the score passes, then increase the index to move to the next step                
         if self.check_score(score, index):

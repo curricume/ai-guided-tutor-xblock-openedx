@@ -81,6 +81,13 @@
                         <input type="hidden" id="is_last_phase_successful" value="{{ is_last_phase_successful }}">
                         <input type="hidden" id="block_id" value="{{ block_id}}">
                         <div id="chatbox-history">
+                        {% if is_user_staff %}
+                            <h2>Scores:</h2>
+                            {% for phase, score in user_score.items %}
+                                <h3>Question {{forloop.counter}} Score: {{score}}</h3>
+                                ------------------------------
+                            {% endfor %}
+                        {% endif %}
                             {% if is_initial_phase %}
                                 <div id="chat-logs">
                                     <p class="questions">{{ next_question }}</p>
