@@ -97,6 +97,10 @@ function GuidedRubricXBlock(runtime, element) {
             var chat_message = lastChatMsg.value;
             last_attempted_phase_id = $('#last_attempted_phase_id').val()
             $('.micro-ai-btn-container').css('display', 'none')
+            var Notificationelements = document.querySelectorAll('.notification-btm');
+            Notificationelements.forEach(function(element) {
+                element.parentNode.removeChild(element);
+            });
             send_message(chat_message);
         });
     }
@@ -264,7 +268,8 @@ function GuidedRubricXBlock(runtime, element) {
         function preprocessText(text) {
             return text
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Replace **text** with <strong>text</strong>
-                .replace(/\n/g, '<br>'); // Replace newlines with <br>
+                .replace(/\n/g, '<br>') // Replace newlines with <br>
+                .replace(/`/g, '');
         }
 
         // Preprocess the text
@@ -310,13 +315,13 @@ function GuidedRubricXBlock(runtime, element) {
         initReports();
         pElements = document.querySelectorAll('.ai-msg p');
         pElements.forEach(function(pElement) {
-            let text = pElement.textContent;
-    
+            let text = pElement.innerHTML;
             // Function to preprocess text and replace markers with HTML tags
             function preprocessText(text) {
                 return text
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Replace **text** with <strong>text</strong>
-                    .replace(/\n/g, '<br>'); // Replace newlines with <br>
+                    .replace(/\n/g, '<br>') // Replace newlines with <br>
+                    .replace(/`/g, '');
             }
     
             // Preprocess the text
