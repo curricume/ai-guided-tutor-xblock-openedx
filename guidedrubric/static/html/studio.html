@@ -68,58 +68,78 @@
             {% for block_phase in guided_rubric_xblock.block_phases %}
                 <li class="field comp-setting-entry is-set dynamic-entry">
                     <div class="wrapper-comp-setting-container">
-                        <div class="wrapper-comp-setting">
-                            <label class="label setting-label" for="phase_name_{{ block_phase.phase_id }}">Phase Name</label>
-                            <input class="input setting-input phase-input-name" id="phase_name_{{ block_phase.phase_id }}" name="phase_name_{{ block_phase.phase_id }}" value="{{ block_phase.phase_name }}" type="text" required/>
+                        <div class="wrapper-rubric">
+                            <div class="wrapper-comp-setting">
+                             <label class="label setting-label" for="phase_name_{{ block_phase.phase_id }}">Phase Name</label>
+                                <input class="input setting-input phase-input-name" id="phase_name_{{ block_phase.phase_id }}" name="phase_name_{{ block_phase.phase_id }}" value="{{ block_phase.phase_name }}" type="text" required/>
+                            </div>
                         </div>
-                        <div class="wrapper-comp-setting">
-                            <label class="label setting-label" for="phase_question_{{ block_phase.phase_id }}">Question</label>
-                            <input class="input setting-input phase-input-question" id="phase_question_{{ block_phase.phase_id }}" name="phase_question_{{ block_phase.phase_id }}" value="{{ block_phase.phase_question }}" type="text" required/>
+                        <div class="wrapper-rubric">
+                            <div class="wrapper-comp-setting">
+                                <label class="label setting-label" for="phase_question_{{ block_phase.phase_id }}">Question</label>
+                                <input class="input setting-input phase-input-question" id="phase_question_{{ block_phase.phase_id }}" name="phase_question_{{ block_phase.phase_id }}" value="{{ block_phase.phase_question }}" type="text" required/>
+                            </div>
+                            <span class="tip setting-help">The question is to be displayed to the user in this phase.</span>
                         </div>
-                        <div class="wrapper-comp-setting">
-                            <label class="label setting-label" for="helper_text_{{ block_phase.phase_id }}">Helper Text</label>
-                            <input class="input setting-input" id="helper_text_{{ block_phase.phase_id }}"  value="{{ block_phase.helper_text }}" type="text"/>
+                        <div class="wrapper-rubric">
+                            <div class="wrapper-comp-setting">
+                                <label class="label setting-label" for="helper_text_{{ block_phase.phase_id }}">Helper Text</label>
+                                <input class="input setting-input" id="helper_text_{{ block_phase.phase_id }}"  value="{{ block_phase.helper_text }}" type="text"/>
+                            </div>
                         </div>
-                        <div class="wrapper-comp-setting">
-                            <label class="label setting-label" for="ai_instructions_{{ block_phase.phase_id }}">AI Instructions</label>
-                            <input class="input setting-input" id="ai_instructions_{{ block_phase.phase_id }}"  value="{{ block_phase.ai_instructions }}" type="text"/>
+                        <div class="wrapper-rubric">
+                            <div class="wrapper-comp-setting">
+                                <label class="label setting-label" for="ai_instructions_{{ block_phase.phase_id }}">AI Instructions</label>
+                                <input class="input setting-input" id="ai_instructions_{{ block_phase.phase_id }}"  value="{{ block_phase.ai_instructions }}" type="text"/>
+                            </div>
+                            <span class="tip setting-help">The user will give you their name. Welcome them by name.</span>
                         </div>
-                        <div class="wrapper-comp-setting">
-                            <label class="label setting-label" for="scored_question_{{ block_phase.phase_id }}">Scored Question</label>
-                            <input type="checkbox" class="input setting-input scored_question" id="scored_question_{{ block_phase.phase_id }}" {% if block_phase.scored_question %}checked{% endif %}/>
+                        <div class="wrapper-rubric">
+                            <div class="wrapper-comp-setting">
+                                <label class="label setting-label" for="scored_question_{{ block_phase.phase_id }}">Scored Question</label>
+                                <input type="checkbox" class="input setting-input scored_question" id="scored_question_{{ block_phase.phase_id }}" {% if block_phase.scored_question %}checked{% endif %}/>
+                            </div>
+                            <span class="tip setting-help">If this is a scored phase, then a rubric must be provided that<br> the AI can use to score a response. 
+                            The X-block will extract the <br>total score to determine if the user has met the threshold<br> to move on with their answer</span><br>
                         </div>
-                        
+
                         <div id="div_rubric_{{ block_phase.phase_id }}" class="wrapper-comp-setting" style="{% if not block_phase.scored_question %}display:none;{% endif %}">
-                            <div>
-                                <label class="label setting-label" for="rubric_{{ block_phase.phase_id }}">Rubric</label>
-                                <textarea class="input setting-input" id="rubric_{{ block_phase.phase_id }}" rows="6" cols="70"  {% if block_phase.scored_question %}required{% endif %}>{{ block_phase.rubric }}</textarea>
-                            </div>
-                            <div class="helper-content">
+                            <div class="wrapper-rubric">
+                                <div>
+                                    <label class="label setting-label" for="rubric_{{ block_phase.phase_id }}">Rubric</label>
+                                    <textarea class="input setting-input" id="rubric_{{ block_phase.phase_id }}" rows="6" cols="70"  {% if block_phase.scored_question %}required{% endif %}>{{ block_phase.rubric }}</textarea>
+                                </div>
+                                <div class="helper-content">
 
-                                <p>1. Criteria 1:
-                                </p><ul>
-                                <li>2 points - Evidence required to receive two points</li>
-                                <li>1 point - Evidence required to receive one point</li>
-                                <li>0 points - Evidence required to receive no points</li>
-                                </ul>
-                                <p></p>
-                                
-                                <p>2. Criteria 2:
-                                </p><ul>
-                                <li>5 points - Evidence required to receive five points</li>
-                                <li>3 points - Evidence required to receive three points</li>
-                                <li>0 points - Evidence required to receive no points</li>
-                                </ul>
-                                <p></p>
+                                    <p>1. Criteria 1:
+                                    </p><ul>
+                                    <li>2 points - Evidence required to receive two points</li>
+                                    <li>1 point - Evidence required to receive one point</li>
+                                    <li>0 points - Evidence required to receive no points</li>
+                                    </ul>
+                                    <p></p>
+                                    <p>2. Criteria 2:
+                                    </p><ul>
+                                    <li>5 points - Evidence required to receive five points</li>
+                                    <li>3 points - Evidence required to receive three points</li>
+                                    <li>0 points - Evidence required to receive no points</li>
+                                    </ul>
+                                    <p></p>
+                                </div>
                             </div>
-                            <label class="label setting-label" for="minimum_score_{{ block_phase.phase_id }}">Minimum Score</label>
-                            <input class="input setting-input" id="minimum_score_{{ block_phase.phase_id }}" value="{{ block_phase.minimum_score }}"  />
+                            <div class="wrapper-rubric"> 
+                                <label class="label setting-label" for="minimum_score_{{ block_phase.phase_id }}">Minimum Score</label>
+                                <input class="input setting-input" id="minimum_score_{{ block_phase.phase_id }}" value="{{ block_phase.minimum_score }}"  />
 
                         </div>
+                                <span class="tip setting-help">This is the minimum total score that a user must achieve to move past this phase.</span>
+                            </div>
 
-                        <div class="wrapper-comp-setting">
-                            <label class="label setting-label" for="button_label_{{ block_phase.phase_id }}">Button Label</label>
-                            <input class="input setting-input" id="button_label_{{ block_phase.phase_id }}"  value="{{ block_phase.button_label }}" type="text" required/>
+                        <div class="wrapper-rubric">
+                            <div class="wrapper-comp-setting">
+                                <label class="label setting-label" for="button_label_{{ block_phase.phase_id }}">Button Label</label>
+                                <input class="input setting-input" id="button_label_{{ block_phase.phase_id }}"  value="{{ block_phase.button_label }}" type="text" required/>
+                            </div>
                         </div>
                         
                     </div>
