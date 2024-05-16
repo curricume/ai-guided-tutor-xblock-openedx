@@ -130,8 +130,8 @@ function GuidedRubricXBlock(runtime, element) {
                 data: JSON.stringify({}),
                 contentType: "application/json",
                 success: function (result) {
-                    alert("User responses have been reset.");
-                    location.reload(); // Reload the page to reflect the changes
+                    alert("Responses have been reset.");
+                    location.reload();
                 },
                 error: function (error) {
                     console.error("Error resetting responses:", error);
