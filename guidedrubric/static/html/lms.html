@@ -24,6 +24,10 @@
             <p>{{guided_rubric_xblock.short_description}}</p>
             {% endif %}
         </div>
+        <div class="inline-element">
+            <p class="inline-element">Attempts :</p><label id="attempts" class="inline-element">{{guided_rubric_xblock.completion_token}}</label>
+            <p class="inline-element">Maximum Attempts :</p><label id="maximum_attempts" class="inline-element">{{guided_rubric_xblock.max_tokens_per_user}}</label>
+        </div>
         <div class="guided-critical-analysis-body">
             <div class="demo-text">
             </div>

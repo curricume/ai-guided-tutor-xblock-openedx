@@ -73,6 +73,7 @@ function GuidedRubricXBlock(runtime, element) {
                 }
                 let completion_token = response.response_metadata.completion_token
                 $('#completion_token').val(completion_token)
+                $('#attempts').text(completion_token)
                 attempted_phase_is_last = response.response_metadata['attempted_phase_is_last']
                 is_attempted_phase_successful = response.response_metadata['is_attempted_phase_successful']
             } else {

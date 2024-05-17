@@ -588,6 +588,10 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
     def reset_user_responses(self, data, suffix=''):
         self.user_response = {}
         self.user_score = {}
+        if self.open_ai_thread_id != '':
+            client.beta.threads.delete(self.open_ai_thread_id)
+            self.open_ai_thread_id = ''
+            session_state['thread_obj'] = None
         return {"result": "success", "errors": []}
 
     def handle_assistant_interaction(self, index, manager, user_input):

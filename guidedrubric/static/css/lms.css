@@ -352,7 +352,10 @@ div#prompt-with-loader {
     border: none;
     margin: auto;
 }
-
+.inline-element {
+    display: inline-block;
+    margin: 2px;
+}
 .wrap-instructor-info{
     margin: auto;
 }
