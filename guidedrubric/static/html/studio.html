@@ -66,9 +66,9 @@
             <input type="hidden" id="json_phases" value="{{ guided_rubric_xblock.phases }}"></input>
             <input type="hidden" id="last_phase_id" value="{{ guided_rubric_xblock.last_phase_id }}"></input>
             {% for block_phase in guided_rubric_xblock.block_phases %}
-                <li class="field comp-setting-entry is-set dynamic-entry phase-border">
+                <li class="field comp-setting-entry is-set dynamic-entry">
                     <div class="wrapper-comp-setting-container">
-                        <div class="wrapper-rubric">
+                        <div class="wrapper-rubric phase-border">
                             <div class="wrapper-comp-setting">
                              <label class="label setting-label" for="phase_name_{{ block_phase.phase_id }}">Phase Name</label>
                                 <input class="input setting-input phase-input-name" id="phase_name_{{ block_phase.phase_id }}" name="phase_name_{{ block_phase.phase_id }}" value="{{ block_phase.phase_name }}" type="text" required/>
