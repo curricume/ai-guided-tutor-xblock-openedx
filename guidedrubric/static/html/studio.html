@@ -68,7 +68,7 @@
             {% for block_phase in guided_rubric_xblock.block_phases %}
                 <li class="field comp-setting-entry is-set dynamic-entry">
                     <div class="wrapper-comp-setting-container">
-                        <div class="wrapper-rubric">
+                        <div class="wrapper-rubric phase-border">
                             <div class="wrapper-comp-setting">
                              <label class="label setting-label" for="phase_name_{{ block_phase.phase_id }}">Phase Name</label>
                                 <input class="input setting-input phase-input-name" id="phase_name_{{ block_phase.phase_id }}" name="phase_name_{{ block_phase.phase_id }}" value="{{ block_phase.phase_name }}" type="text" required/>
@@ -87,12 +87,14 @@
                                 <input class="input setting-input" id="helper_text_{{ block_phase.phase_id }}"  value="{{ block_phase.helper_text }}" type="text"/>
                             </div>
                         </div>
-                        <div class="wrapper-rubric">
-                            <div class="wrapper-comp-setting">
+                        <div class="wrapper-rubric" style="display: flex;">
+                            <div class="wrapper-comp-setting input-ai-instruction">
                                 <label class="label setting-label" for="ai_instructions_{{ block_phase.phase_id }}">AI Instructions</label>
-                                <textarea class="input setting-input" id="ai_instructions_{{ block_phase.phase_id }}"  value="{{ block_phase.ai_instructions }}" type="text"/>
+                                <div><span class="tip setting-help">The user will give you their name. Welcome them by name.</span></div>
                             </div>
-                            <span class="tip setting-help">The user will give you their name. Welcome them by name.</span>
+                            <div>                                
+                                 <textarea class="input setting-input textarea_ai_instructions" id="ai_instructions_{{ block_phase.phase_id }}"  value="{{ block_phase.ai_instructions }}" type="text">{{ block_phase.ai_instructions }}</textarea>
+                            </div>
                         </div>
                         <div class="wrapper-rubric">
                             <div class="wrapper-comp-setting">
@@ -127,14 +129,16 @@
                                     <p></p>
                                 </div>
                             </div>
-                            <div class="wrapper-rubric"> 
-                                <label class="label setting-label" for="minimum_score_{{ block_phase.phase_id }}">Minimum Score</label>
-                                <input class="input setting-input" id="minimum_score_{{ block_phase.phase_id }}" value="{{ block_phase.minimum_score }}"  />
-
-                        </div>
-                                <span class="tip setting-help">This is the minimum total score that a user must achieve to move past this phase.</span>
+                            <div class="wrapper-rubric" style="display: flex;">
+                                <div class="new-wrapper-div">
+                                    <label class="label setting-label min-score" for="minimum_score_{{ block_phase.phase_id }}">Minimum Score</label>
+                                    <div><span class="tip setting-help">This is the minimum total score that a user must achieve to move past this phase.</span></div>
+                                </div>
+                                <div>
+                                    <input class="input setting-input minimum-score-input" id="minimum_score_{{ block_phase.phase_id }}" value="{{ block_phase.minimum_score }}">
+                                </div>
                             </div>
-
+                        </div>
                         <div class="wrapper-rubric">
                             <div class="wrapper-comp-setting">
                                 <label class="label setting-label" for="button_label_{{ block_phase.phase_id }}">Button Label</label>
