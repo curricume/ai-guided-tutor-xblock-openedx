@@ -133,7 +133,7 @@ function GuidedRubricXBlock(runtime, element) {
                 data: JSON.stringify({}),
                 contentType: "application/json",
                 success: function (result) {
-                    alert("Responses have been reset.");
+                    alert("Responses have been reset. Refresh the page for a better UI experience.");
                     location.reload();
                 },
                 error: function (error) {
