@@ -114,6 +114,11 @@ li.field.dynamic-entry {
   width: 100% !important;
   margin-bottom: 5px;
 }
+
 .minimum-score-input{
   height: unset !important;
+}
+
+.phase-border{
+  border-top: none;
 }
