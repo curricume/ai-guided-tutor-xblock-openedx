@@ -122,6 +122,7 @@ function GuidedRubricXBlock(runtime, element) {
         if (confirm("Do you want to reset the responses?")) {
             const completion_token = parseInt(document.getElementById('completion_token').value);
             const max_tokens_per_user = parseInt(document.getElementById('max_tokens_per_user').value);
+            const is_staff = document.getElementById('is_staff').value === 'True';
             if (!is_staff && completion_token >= max_tokens_per_user) {
                 alert("You cannot reset responses because you have exceeded the maximum number of tokens.");
                 return;
