@@ -30,8 +30,9 @@
 
 li.field.dynamic-entry {
   display: flex;
-  justify-content: space-between;
-  align-items: center
+  /* justify-content: space-between; */
+  /* align-items: center */
+  flex-direction: column-reverse;
 }
 
 .wrapper-comp-setting-container {
@@ -120,5 +121,5 @@ li.field.dynamic-entry {
 }
 
 .phase-border{
-  border-top: none;
+  border-top: none !important;
 }
