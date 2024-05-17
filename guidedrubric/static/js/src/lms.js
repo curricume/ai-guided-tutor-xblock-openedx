@@ -338,15 +338,10 @@ function GuidedRubricXBlock(runtime, element) {
             // Set the entire processed text at once
             pElement.innerHTML = processedText;
         });
+        document.querySelector('.accordion-item').addEventListener('click', function() {
+            this.classList.toggle('open');
+        });
         /* Here's where you'd do things on page load. */
     });
 
-}
-
-function ShowInstructions(){
-    document.querySelectorAll(".accordion-item").forEach((item) => {
-        item.querySelector(".accordion-item-header").addEventListener("click", () => {
-            item.classList.toggle("open");
-        });
-    });
 }
