@@ -92,10 +92,28 @@ li.field.dynamic-entry {
   max-width: 200px;
 }
 
-textarea#ai_instructions_1 {
+.textarea_ai_instructions {
     width: 532px;
     margin-left: 20px;
     min-height: 100px;
     background-image: -webkit-linear-gradient(#f2f2f2, #fff);
     border: 1px solid #b2b2b2;
+}
+
+.input-ai-instruction {
+    width: 25%;
+    margin-right: 10px;
+}
+
+.new-wrapper-div {
+  width: 25%;
+  margin-right: 10px;
+}
+
+.min-score {
+  width: 100% !important;
+  margin-bottom: 5px;
+}
+.minimum-score-input{
+  height: unset !important;
 }
