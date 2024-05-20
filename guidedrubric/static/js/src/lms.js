@@ -338,16 +338,21 @@ function GuidedRubricXBlock(runtime, element) {
             // Set the entire processed text at once
             pElement.innerHTML = processedText;
         });
-        /* Here's where you'd do things on page load. */
-        const textarea = document.getElementById('chat-msg');
-    
-        textarea.addEventListener('input', function () {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
+        // Select all text areas with the class 'chat-msg'
+        const textareas = document.querySelectorAll('.chat-msg');
+        // Loop through each text area and add event listeners
+        textareas.forEach(textarea => {
+            // Add a focus event listener to each text area
+            textarea.addEventListener('input', function() {
+                // Reset the height to auto to calculate the correct scrollHeight
+                this.style.height = 'auto';
+                // Set the height to the scrollHeight of the text area
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            // Initialize the textarea height
+            textarea.style.height = '52px';
         });
-
-        // Initialize the textarea height
-        textarea.style.height = 52 + 'px';
+        /* Here's where you'd do things on page load. */
         });
     }
 
