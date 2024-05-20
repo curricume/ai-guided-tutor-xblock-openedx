@@ -32,7 +32,8 @@ li.field.dynamic-entry {
   display: flex;
   /* justify-content: space-between; */
   /* align-items: center */
-  flex-direction: column-reverse;
+  flex-direction: column;
+  border: 1px solid #e5e5e5;
 }
 
 .wrapper-comp-setting-container {
