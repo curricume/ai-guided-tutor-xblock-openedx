@@ -157,7 +157,7 @@ function GuidedRubricXBlock(runtime, element) {
 
         <div class="chat-input" style="display: block;" id="prompt-with-loader">
             <div id ="chat_input_loader" class="lds-dual-ring" style="display:none"></div><span id="error-msg"></span>
-            <textarea id="chat-msg" class="chat-msg" placeholder="Enter Prompt ... " rows="24" cols="230"></textarea>
+            <textarea id="chat-msg" class="chat-msg" placeholder="Enter Prompt ... " rows="1" cols="3"></textarea>
         </div>
         <div id="ai-msg" class="ai-msg recent-ai-msg"><div class="icon-bar">
             🤖
@@ -339,8 +339,16 @@ function GuidedRubricXBlock(runtime, element) {
             pElement.innerHTML = processedText;
         });
         /* Here's where you'd do things on page load. */
-    });
+        const textarea = document.getElementById('chat-msg');
+    
+        textarea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
 
+        // Initialize the textarea height
+        textarea.style.height = 52 + 'px';
+    });
 }
 
 function ShowInstructions(){
@@ -350,13 +358,3 @@ function ShowInstructions(){
         });
     });
 }
-
-const textarea = document.getElementById('chat-msg');
-    
-textarea.addEventListener('input', function () {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-});
-
-// Initialize the textarea height
-textarea.style.height = textarea.scrollHeight + 'px';
