@@ -331,6 +331,7 @@ div#prompt-with-loader {
     border: none;
     margin-bottom:25px;
     padding-right: 35px !important;
+    overflow: hidden;
 }
 .ai-msg{
   font-family: "Source Sans Pro", sans-serif;

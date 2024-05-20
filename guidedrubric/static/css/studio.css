@@ -52,7 +52,9 @@ li.field.dynamic-entry {
   color: #626365;
   display: flex;
   align-items: center;
-  gap: .5rem
+  gap: .5rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px
 }
 
 .comp-remove-btn button span {
@@ -123,3 +125,86 @@ li.field.dynamic-entry {
 .phase-border{
   border-top: none !important;
 }
+
+.comp-setting-entry input{
+  width:532px !important
+}
+
+.wrapper-comp-setting-container input,.wrapper-comp-setting-container textarea {
+  margin-left: -10px
+}
+
+.wrapper-comp-settings .list-input.settings-list .setting-label{
+  width: 286px;
+}
+
+div#div_rubric_1 label{
+  min-width: 300px !important;
+  margin-right: 0px;
+  margin-bottom: 5px;
+}
+
+textarea#rubric_1 {
+  width: 532px
+}
+
+.wrapper-label {
+  width: 300px;
+}
+
+.wrapper-label label {
+width: 100% !important;
+}
+
+.wrapper-rubric {
+  align-items: flex-start;
+}
+
+
+input#short_description {
+  height: 43.2px;
+}
+
+input#completion_message {
+  height: 43.2px;
+}
+
+input#max_tokens_per_user {
+  height: 43.2px;
+}
+
+
+input#assistant_id {
+  height: 43.2px;
+}
+.wrapper-comp-setting textarea{
+  width: 532px;
+  outline: none;
+}
+
+input#max_tokens_per_user {
+  outline: none;
+}
+
+input.min-score {
+  margin-right: -10px !important;
+}
+
+.bg-input-field {
+    background-color: #f2f2f2;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    background-image: linear-gradient(#f2f2f2, #fff);
+}
+
+.wrapper-rubric-flexbox {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dynamic-entry {
+  margin-top: 10px !important;
+}
+
+.submit-input-btn {
+  margin-left: -3px !important;
+} 

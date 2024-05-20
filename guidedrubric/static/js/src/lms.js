@@ -350,3 +350,13 @@ function ShowInstructions(){
         });
     });
 }
+
+const textarea = document.getElementById('chat-msg');
+    
+textarea.addEventListener('input', function () {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px';
+});
+
+// Initialize the textarea height
+textarea.style.height = textarea.scrollHeight + 'px';

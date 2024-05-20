@@ -24,92 +24,118 @@
     <form id="guided_rubric_form" action="">
         <ul class="list-input settings-list">
         
-        <li class="field comp-setting-entry is-set">
-            <div class="wrapper-comp-setting">
-                <label class="label setting-label" for="display_name">{% trans field_display_name.display_name %}</label>
-                <input class="input setting-input" name="display_name" id="display_name" value="{{ guided_rubric_xblock.display_name }}" type="text" />
-            </div>
-        </li>
-
-        <li class="field comp-setting-entry is-set">
-            <div class="wrapper-comp-setting">
-                <label class="label setting-label" for="short_description">{% trans field_short_description.display_name %}</label>
-                <input class="input setting-input" name="short_description" id="short_description" value="{{ guided_rubric_xblock.short_description }}" type="text" />
-            </div>
-            <span class="tip setting-help">{% trans field_short_description.help %}</span>
-        </li>
-
-        <li class="field comp-setting-entry is-set">
-            <div class="wrapper-comp-setting">
-                <label class="label setting-label" for="completion_message">{% trans field_completion_message.display_name %}</label>
-                <input class="input setting-input" name="completion_message" id="completion_message" value="{{ guided_rubric_xblock.completion_message }}" type="text" />
-            </div>
-            <span class="tip setting-help">{% trans field_completion_message.help %}</span>
-        </li>
-
-        <li class="field comp-setting-entry is-set">
-            <div class="wrapper-comp-setting">
-                <label class="label setting-label" for="max_tokens_per_user">{% trans field_max_tokens_per_user.display_name %}</label>
-                <input class="input setting-input" name="max_tokens_per_user" id="max_tokens_per_user" value="{{ guided_rubric_xblock.max_tokens_per_user }}" type="number" />
-            </div>
-            <span class="tip setting-help">{% trans field_max_tokens_per_user.help %}</span>
-        </li>
-
-        <li class="field comp-setting-entry is-set">
-            <div class="wrapper-comp-setting">
-                <label class="label setting-label" for="assistant_id">{% trans field_assistant_id.display_name %}</label>
-                <input class="input setting-input" name="assistant_id" id="assistant_id" value="{{ guided_rubric_xblock.assistant_id }}" type="text" />
-            </div>
-            <span class="tip setting-help">{% trans field_assistant_id.help %}</span>
-        </li>
+            <li class="field comp-setting-entry is-set wrapper-rubric-flexbox">
+                <div class="wrapper-comp-setting">
+                    <label class="label setting-label" for="display_name">{% trans field_display_name.display_name %}</label>
+                </div>
+                <div>
+                    <input class="input setting-input" name="display_name" id="display_name" value="{{ guided_rubric_xblock.display_name }}" type="text">
+                </div>
+            </li>
+        
+            <li class="field comp-setting-entry is-set wrapper-rubric-flexbox">
+                <div class="wrapper-comp-setting">
+                    <label class="label setting-label" for="short_description">{% trans field_short_description.display_name %}</label>
+                    <div><span class="tip setting-help">{% trans field_short_description.help %}</span></div>
+                </div>
+                <div>
+                    <input class="input setting-input" name="short_description" id="short_description" value="{{ guided_rubric_xblock.short_description }}" type="text">
+                </div>
+            </li>
+        
+        
+            <li class="field comp-setting-entry is-set wrapper-rubric-flexbox">
+                <div class="wrapper-comp-setting">
+                    <label class="label setting-label" for="completion_message">{% trans field_completion_message.display_name %}</label>
+                    <div><span class="tip setting-help">{% trans field_completion_message.help %}</span></div>
+                </div>
+                <div>
+                    <input class="input setting-input" name="completion_message" id="completion_message" value="{{ guided_rubric_xblock.completion_message }}" type="text">
+                </div>
+            </li>
+        
+            <li class="field comp-setting-entry is-set wrapper-rubric-flexbox">
+                <div class="wrapper-comp-setting">
+                    <label class="label setting-label" for="max_tokens_per_user">{% trans field_max_tokens_per_user.display_name %}</label>
+                    <div><span class="tip setting-help">{% trans field_max_tokens_per_user.help %}</span></div>
+                </div>
+                <div>
+                    <input class="input setting-input bg-input-field" name="max_tokens_per_user" id="max_tokens_per_user" value="{{ guided_rubric_xblock.max_tokens_per_user }}" type="number">
+                </div>
+            </li>
+        
+            <li class="field comp-setting-entry is-set wrapper-rubric-flexbox">
+                <div class="wrapper-comp-setting">
+                    <label class="label setting-label" for="assistant_id">{% trans field_assistant_id.display_name %}</label>
+                    <div><span class="tip setting-help">{% trans field_assistant_id.help %}</span></div>
+                </div>
+                <div>
+                    <input class="input setting-input" name="assistant_id" id="assistant_id"
+                    value="{{ guided_rubric_xblock.assistant_id }}" type="text">
+        
+                </div>
+            </li>
             
             <input type="hidden" id="json_phases" value="{{ guided_rubric_xblock.phases }}"></input>
             <input type="hidden" id="last_phase_id" value="{{ guided_rubric_xblock.last_phase_id }}"></input>
             {% for block_phase in guided_rubric_xblock.block_phases %}
                 <li class="field comp-setting-entry is-set dynamic-entry phase-border">
                     <div class="wrapper-comp-setting-container">
-                        <div class="wrapper-rubric">
+                        
+                        <div class="wrapper-rubric phase-border wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting">
-                             <label class="label setting-label" for="phase_name_{{ block_phase.phase_id }}">Phase Name</label>
-                                <input class="input setting-input phase-input-name" id="phase_name_{{ block_phase.phase_id }}" name="phase_name_{{ block_phase.phase_id }}" value="{{ block_phase.phase_name }}" type="text" required/>
+                                <label class="label setting-label" for="phase_name_{{ block_phase.phase_id }}">Phase Name</label>
+                            </div>
+                            <div>
+                                <input class="input setting-input phase-input-name" id="phase_name_{{ block_phase.phase_id }}"" name="phase_name_{{ block_phase.phase_id }}" value="{{ block_phase.phase_name }}" type="text" required="">
                             </div>
                         </div>
-                        <div class="wrapper-rubric">
+
+                        <div class="wrapper-rubric wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting">
                                 <label class="label setting-label" for="phase_question_{{ block_phase.phase_id }}">Question</label>
-                                <input class="input setting-input phase-input-question" id="phase_question_{{ block_phase.phase_id }}" name="phase_question_{{ block_phase.phase_id }}" value="{{ block_phase.phase_question }}" type="text" required/>
+                                <div><span class="tip setting-help">The question is to be displayed to the user in this phase.</span></div>
                             </div>
-                            <span class="tip setting-help">The question is to be displayed to the user in this phase.</span>
+                            <div>
+                                <input class="input setting-input phase-input-question" id="phase_question_{{ block_phase.phase_id }}" name="phase_question_{{ block_phase.phase_id }}" value="{{ block_phase.phase_question }}" type="text" required="">
+                            </div>
                         </div>
-                        <div class="wrapper-rubric">
+
+                        <div class="wrapper-rubric wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting">
                                 <label class="label setting-label" for="helper_text_{{ block_phase.phase_id }}">Helper Text</label>
-                                <input class="input setting-input" id="helper_text_{{ block_phase.phase_id }}"  value="{{ block_phase.helper_text }}" type="text"/>
+                            </div>
+                            <div>
+                                <input class="input setting-input" id="helper_text_{{ block_phase.phase_id }}"  value="{{ block_phase.helper_text }}" type="text">
                             </div>
                         </div>
-                        <div class="wrapper-rubric" style="display: flex;">
-                            <div class="wrapper-comp-setting input-ai-instruction">
+                        <div class="wrapper-rubric wrapper-rubric-flexbox">
+                            <div class="wrapper-comp-setting" >
                                 <label class="label setting-label" for="ai_instructions_{{ block_phase.phase_id }}">AI Instructions</label>
                                 <div><span class="tip setting-help">The user will give you their name. Welcome them by name.</span></div>
                             </div>
-                            <div>                                
-                                 <textarea class="input setting-input textarea_ai_instructions" id="ai_instructions_{{ block_phase.phase_id }}"  value="{{ block_phase.ai_instructions }}" type="text">{{ block_phase.ai_instructions }}</textarea>
+                            <div>
+                                <textarea class="input setting-input textarea_ai_instructions" id="ai_instructions_{{ block_phase.phase_id }}"  value="{{ block_phase.ai_instructions }}" type="text">{{ block_phase.ai_instructions }}</textarea>
                             </div>
                         </div>
-                        <div class="wrapper-rubric">
+                        
+
+                        <div class="wrapper-rubric wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting">
                                 <label class="label setting-label" for="scored_question_{{ block_phase.phase_id }}">Scored Question</label>
+                                <div><span class="tip setting-help">If this is a scored phase, then a rubric must be provided that<br> the AI can use to score a response. 
+                                The X-block will extract the <br>total score to determine if the user has met the threshold<br> to move on with their answer</span></div>
+                            </div>
+                            <div>
                                 <input type="checkbox" class="input setting-input scored_question" id="scored_question_{{ block_phase.phase_id }}" {% if block_phase.scored_question %}checked{% endif %}/>
                             </div>
-                            <span class="tip setting-help">If this is a scored phase, then a rubric must be provided that<br> the AI can use to score a response. 
-                            The X-block will extract the <br>total score to determine if the user has met the threshold<br> to move on with their answer</span><br>
                         </div>
 
                         <div id="div_rubric_{{ block_phase.phase_id }}" class="wrapper-comp-setting" style="{% if not block_phase.scored_question %}display:none;{% endif %}">
                             <div class="wrapper-rubric">
                                 <div>
                                     <label class="label setting-label" for="rubric_{{ block_phase.phase_id }}">Rubric</label>
-                                    <textarea class="input setting-input" id="rubric_{{ block_phase.phase_id }}" rows="6" cols="70"  {% if block_phase.scored_question %}required{% endif %}>{{ block_phase.rubric }}</textarea>
+                                    <textarea class="input setting-input bg-input-field" id="rubric_{{ block_phase.phase_id }}" rows="6" cols="70"  {% if block_phase.scored_question %}required{% endif %}>{{ block_phase.rubric }}</textarea>
                                 </div>
                                 <div class="helper-content">
 
@@ -129,23 +155,25 @@
                                     <p></p>
                                 </div>
                             </div>
-                            <div class="wrapper-rubric" style="display: flex;">
-                                <div class="new-wrapper-div">
-                                    <label class="label setting-label min-score" for="minimum_score_{{ block_phase.phase_id }}">Minimum Score</label>
-                                    <div><span class="tip setting-help">This is the minimum total score that a user must achieve to move past this phase.</span></div>
+                            <div class="wrapper-rubric wrapper-rubric-flexbox">
+                                <div>
+                                    <label class="label setting-label" for="minimum_score_{{ block_phase.phase_id }}">Minimum Score</label>
+                                    <div><span class="tip setting-help">This is the minimum total score that a user must achieve to move past
+                                            this phase.</span></div>
                                 </div>
                                 <div>
-                                    <input class="input setting-input minimum-score-input" id="minimum_score_{{ block_phase.phase_id }}" value="{{ block_phase.minimum_score }}">
+                                    <input class="input setting-input bg-input-field min-score" id="minimum_score_{{ block_phase.phase_id }}" value="{{ block_phase.minimum_score }}">
                                 </div>
                             </div>
                         </div>
-                        <div class="wrapper-rubric">
+                        <div class="wrapper-rubric wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting">
                                 <label class="label setting-label" for="button_label_{{ block_phase.phase_id }}">Button Label</label>
-                                <input class="input setting-input" id="button_label_{{ block_phase.phase_id }}"  value="{{ block_phase.button_label }}" type="text" required/>
+                            </div>
+                            <div>
+                                <input class="input setting-input" id="button_label_{{ block_phase.phase_id }}"  value="{{ block_phase.button_label }}" type="text" required="">
                             </div>
                         </div>
-                        
                     </div>
 
                     <div class="comp-remove-btn">
