@@ -32,14 +32,18 @@ function GuidedRubricXBlock(runtime, element) {
         // Loop through each text area and add event listeners
         textareas.forEach(textarea => {
             // Add a focus event listener to each text area
-            textarea.addEventListener('input', function() {
-                // Reset the height to auto to calculate the correct scrollHeight
-                this.style.height = 'auto';
-                // Set the height to the scrollHeight of the text area
-                this.style.height = (this.scrollHeight) + 'px';
-            });
-            // Initialize the textarea height
-            textarea.style.height = textarea.scrollHeight + 'px';
+            if (textarea.value == 'skip') {
+                textarea.style.height = '52px';    
+            } else {
+                textarea.addEventListener('input', function() {
+                    // Reset the height to auto to calculate the correct scrollHeight
+                    this.style.height = 'auto';
+                    // Set the height to the scrollHeight of the text area
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+                // Initialize the textarea height
+                textarea.style.height = textarea.scrollHeight + 'px';
+            }    
         });
     }
 
@@ -82,6 +86,7 @@ function GuidedRubricXBlock(runtime, element) {
                     keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2])
                     IncreaseTextAreaHeight()
                 } else if (message == "skip" && response.response[2] == null) {
+                    IncreaseTextAreaHeight()
                     $('.micro-ai-btn-container').css('display', 'none');
                     let p = document.createElement('p');
                     p.classList.add('notification-btm');
