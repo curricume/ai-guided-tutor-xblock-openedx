@@ -368,14 +368,5 @@ function GuidedRubricXBlock(runtime, element) {
             this.classList.toggle('open');
         });
         /* Here's where you'd do things on page load. */
-        const textarea = document.getElementById('chat-msg');
-    
-        textarea.addEventListener('input', function () {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
-
-        // Initialize the textarea height
-        textarea.style.height = 52 + 'px';
     });
 }
