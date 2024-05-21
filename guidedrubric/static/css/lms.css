@@ -355,7 +355,8 @@ div#prompt-with-loader {
 }
 .inline-element {
     display: inline-block;
-    margin: 2px;
+    margin: 5px;
+    margin-right: 20px;
 }
 .wrap-instructor-info{
     margin: auto;
