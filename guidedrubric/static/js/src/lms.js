@@ -26,6 +26,27 @@ function GuidedRubricXBlock(runtime, element) {
 
     }
 
+    function IncreaseTextAreaHeight() {
+        // Select all text areas with the class 'chat-msg'
+        const textareas = document.querySelectorAll('.chat-msg');
+        // Loop through each text area and add event listeners
+        textareas.forEach(textarea => {
+            // Add a focus event listener to each text area
+            if (textarea.value == 'skip') {
+                textarea.style.height = '52px';    
+            } else {
+                textarea.addEventListener('input', function() {
+                    // Reset the height to auto to calculate the correct scrollHeight
+                    this.style.height = 'auto';
+                    // Set the height to the scrollHeight of the text area
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+                // Initialize the textarea height
+                textarea.style.height = textarea.scrollHeight + 'px';
+            }    
+        });
+    }
+
     function send_message(message) {
         const completion_token = parseInt(document.getElementById('completion_token').value);
         const max_tokens_per_user = parseInt(document.getElementById('max_tokens_per_user').value);
@@ -59,10 +80,13 @@ function GuidedRubricXBlock(runtime, element) {
                 if (response.response[1] == "Success" && response.response[2]) {
                     type_message(response.response);
                     keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2])
+                    IncreaseTextAreaHeight()
                 } 
                 else if (message == "skip" && response.response[2]) {
                     keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2])
+                    IncreaseTextAreaHeight()
                 } else if (message == "skip" && response.response[2] == null) {
+                    IncreaseTextAreaHeight()
                     $('.micro-ai-btn-container').css('display', 'none');
                     let p = document.createElement('p');
                     p.classList.add('notification-btm');
@@ -338,6 +362,7 @@ function GuidedRubricXBlock(runtime, element) {
             // Set the entire processed text at once
             pElement.innerHTML = processedText;
         });
+        IncreaseTextAreaHeight();
         /* Here's where you'd do things on page load. */
         const textarea = document.getElementById('chat-msg');
     
