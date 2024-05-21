@@ -382,6 +382,12 @@ div#prompt-with-loader {
     max-width: 40px;
     width: 100%;
 }
+input#completion_token,input#max_tokens_per_user {
+    border: none;
+    outline: none;
+    background: none;
+    margin-left:-15px
+}
 @media (max-width: 767px){
     .ai-msg{
         flex-direction: column;

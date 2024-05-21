@@ -6,8 +6,6 @@
     <div class="chatgpt_block">
         <div class="chatbox">
             <input type="hidden" id="is_staff" value="{{is_user_staff}}">
-            <input type="hidden" id="completion_token" value="{{guided_rubric_xblock.completion_token}} ">
-            <input type="hidden" id="max_tokens_per_user" value="{{guided_rubric_xblock.max_tokens_per_user}} ">
             <div class="chat-input">
                 <span id="error-msg"></span>
                 <input type="hidden" id="last_attempted_phase_id" value="{{ guided_rubric_xblock.last_attempted_phase_id }}">
@@ -25,8 +23,8 @@
             {% endif %}
         </div>
         <div class="inline-element">
-            <p class="inline-element"><b>Attempts :</b> {{guided_rubric_xblock.completion_token}}</p>
-            <p class="inline-element"><b>Maximum Attempts :</b> {{guided_rubric_xblock.max_tokens_per_user}}</p>
+            <p class="inline-element"><b>Attempts :</b> </p><input id="completion_token" disabled value="{{guided_rubric_xblock.completion_token}} ">
+            <p class="inline-element"><b>Maximum Attempts :</b> </p><input id="max_tokens_per_user" disabled value="{{guided_rubric_xblock.max_tokens_per_user}} ">
         </div>
         <div class="guided-critical-analysis-body">
             <div class="demo-text">
