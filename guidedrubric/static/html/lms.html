@@ -164,6 +164,9 @@
                         </div>
                     </div>
                 </div>
+                {% if not last_attempted_phase_id %}
+                    <p class="notification-btm">{{guided_rubric_xblock.completion_message}}</p>
+                {% endif %}
             </div>
         </div>
     </div>
