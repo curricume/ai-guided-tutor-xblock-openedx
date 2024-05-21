@@ -97,6 +97,7 @@ function GuidedRubricXBlock(runtime, element) {
                 }
                 let completion_token = response.response_metadata.completion_token
                 $('#completion_token').val(completion_token)
+                $('#attempts').text(completion_token)
                 attempted_phase_is_last = response.response_metadata['attempted_phase_is_last']
                 is_attempted_phase_successful = response.response_metadata['is_attempted_phase_successful']
             } else {
@@ -363,6 +364,9 @@ function GuidedRubricXBlock(runtime, element) {
             pElement.innerHTML = processedText;
         });
         IncreaseTextAreaHeight();
+        document.querySelector('.accordion-item').addEventListener('click', function() {
+            this.classList.toggle('open');
+        });
         /* Here's where you'd do things on page load. */
         const textarea = document.getElementById('chat-msg');
     
@@ -373,13 +377,5 @@ function GuidedRubricXBlock(runtime, element) {
 
         // Initialize the textarea height
         textarea.style.height = 52 + 'px';
-    });
-}
-
-function ShowInstructions(){
-    document.querySelectorAll(".accordion-item").forEach((item) => {
-        item.querySelector(".accordion-item-header").addEventListener("click", () => {
-            item.classList.toggle("open");
-        });
     });
 }
