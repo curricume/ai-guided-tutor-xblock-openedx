@@ -175,22 +175,21 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="comp-remove-btn">
-                        <button id="phase_remove_btn_{{ block_phase.phase_id }}" class="phase_remove_btn">remove <span> × </span></button>
-                    </div>
-
-
                     <div class="wrapper-rubric wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting">
                                 <label class="label setting-label" for="skip_phase_{{ block_phase.phase_id }}">Skip Phase</label>
-                                <div><span class="tip setting-help">Skip the phase</span></div>
+                                <div><span class="tip setting-help">Can Skip Phase</span></div>
                             </div>
                             <div>
                                 <input type="checkbox" {% if block_phase.skip_phase %}checked{% endif %} class="input setting-input skip_phase" id="skip_phase_{{ block_phase.phase_id }}"/>
                             </div>
                         </div>
 
+                    <div class="wrapper-rubric wrapper-rubric-flexbox">
+                    <div class="comp-remove-btn">
+                        <button id="phase_remove_btn_{{ block_phase.phase_id }}" class="phase_remove_btn">remove <span> × </span></button>
+                    </div>
+                    </div>
                 </li>            
             {% endfor %}
             
