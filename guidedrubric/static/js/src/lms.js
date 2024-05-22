@@ -83,8 +83,19 @@ function GuidedRubricXBlock(runtime, element) {
                     IncreaseTextAreaHeight()
                 } 
                 else if (message == "skip" && response.response[2]) {
-                    keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2])
-                    IncreaseTextAreaHeight()
+                    if (response.response[6]) {
+                        $('.micro-ai-btn-container').css('display', '');
+                        $('#reset-responses-button').css('display', '');
+                        console.log(response.response[7]);
+                        if (response.response[7] == false) {
+                            $('#skip-btn').css('display', 'none');
+                        }
+                        keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2])
+                        IncreaseTextAreaHeight()
+                    } else{
+                        type_message(response.response);
+                        IncreaseTextAreaHeight();
+                    }
                 } else if (message == "skip" && response.response[2] == null) {
                     IncreaseTextAreaHeight()
                     $('.micro-ai-btn-container').css('display', 'none');

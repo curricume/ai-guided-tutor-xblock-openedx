@@ -668,7 +668,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         self.is_last_phase_successful = True
 
 
-    def handle_interaction(self, user_input):
+    def handle_interaction(self, user_input, phase_skip=False):
 
         AssistantManager.assistant_id = self.assistant_id
         AssistantManager.thread_id = self.open_ai_thread_id
@@ -684,7 +684,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
                 return hand_intr, hand_gra, None, None, [], self.completion_message
             else:
                 index = int(self.last_attempted_phase_id)
-            if user_input == "skip":
+            if user_input == "skip" and phase_skip:
                 self.handle_skip()
                 hand_intr = None
                 hand_gra = None
@@ -695,12 +695,14 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
                 phase = self.get_phase(self.last_attempted_phase_id)
                 question = phase['phase_question']
                 button_label = phase['button_label']
+                next_phase_skip = phase.get('skip_phase', False) if phase else False
             except:
                 question = None
                 button_label = None
+                next_phase_skip = None
             messages_to_send = ai_messages.copy()
             ai_messages.clear()
-        return hand_intr, hand_gra, question, button_label, messages_to_send, self.completion_message
+        return hand_intr, hand_gra, question, button_label, messages_to_send, self.completion_message, phase_skip, next_phase_skip
 
     # TO-DO: change this handler to perform your own actions.  You may need more
     # than one handler, or you may not need any handlers at all.
@@ -709,12 +711,13 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         """Send message to OpenAI, and return the response"""
 
         phase = self.get_phase(self.last_attempted_phase_id)
+        phase_skip = phase.get('skip_phase', False) if phase else False
         response_metadata = {'attempted_phase_id': self.last_attempted_phase_id, 'attempted_phase_question':\
         phase['phase_question']}
         self.user_response[self.last_attempted_phase_id] = data['message']
         user_input = data['message']
         phase_id = int(self.last_attempted_phase_id)
-        res = self.handle_interaction(user_input)
+        res = self.handle_interaction(user_input, phase_skip)
         if self.user_response.get(phase_id):
             user_response = self.user_response
             phase_response = {}
