@@ -158,7 +158,9 @@
                         </div>
                         {% if last_attempted_phase_id %}
                         <div class="micro-ai-btn-primary micro-ai-btn-container"><button id="send-btn">{{button_label}}</button>
+                            {% if skip_phase %}
                             <button id="skip-btn" class="btn-ghost">Skip Question</button>
+                            {% endif %}
                         </div>
                         {% endif %}
                         <div class="micro-ai-btn-primary">

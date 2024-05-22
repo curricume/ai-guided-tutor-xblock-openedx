@@ -291,6 +291,11 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         scope=Scope.settings,
     )
 
+    skip_phase = Boolean(
+        display_name=_("Skip Phase"),
+        default=True,
+    )
+
     completion_token = Integer(
         display_name=_("Total Prompt Attempts For User"),
         scope=Scope.user_state,
@@ -524,6 +529,10 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
                 self.last_attempted_phase_id = int(self.block_phases[0]['phase_id'])
             except:
                 self.last_attempted_phase_id = 1
+
+        # current_phase = self.get_phase(self.last_attempted_phase_id)
+        # phase_skip = current_phase.get('skip_phase', False) if current_phase else False
+
         is_initial_phase = True
         if len(self.user_response.keys()) > 0:
             is_initial_phase = False
@@ -544,6 +553,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
             next_question = self.get_next_question()
 
         phase = self.get_phase(self.last_attempted_phase_id)
+        phase_skip = phase.get('skip_phase', False) if phase else False
         button_label = ''
         if phase:
             button_label = phase['button_label']
@@ -559,6 +569,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
             "is_initial_phase": is_initial_phase,
             "block_id": self.scope_ids.usage_id,
             "user_score": self.user_score,
+            "skip_phase": phase_skip,
         }
         lms_context.update(context or {})
         template = self.render_template("static/html/lms.html", lms_context)

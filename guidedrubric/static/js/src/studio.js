@@ -42,6 +42,15 @@ function GuidedRubricXBlock(runtime, element) {
                 <span class="tip setting-help">If this is a scored phase, then a rubric must be provided that<br> the AI can use to score a response. 
                 The X-block will extract the <br>total score to determine if the user has met the threshold<br> to move on with their answer</span><br>
             </div>
+
+            <div class="wrapper-rubric">
+                <div class="wrapper-comp-setting">
+                    <label class="label setting-label" for="skip_phase_`+block_last_phase_id+`">Skip Phase</label>
+                    <input type="checkbox" checked class="input setting-input skip_phase" id="skip_phase_`+block_last_phase_id+`"/>
+                </div>
+                <span class="tip setting-help">Skip the phase</span><br>
+            </div>
+
             <div class="wrapper-rubric">
                 <div id="div_rubric_`+block_last_phase_id+`" class="wrapper-comp-setting" style="display:none">
                     <div>
@@ -170,6 +179,7 @@ function GuidedRubricXBlock(runtime, element) {
             let phase_helper_text = $('#helper_text_'+phase_id).val()
             let phase_ai_instructions = $('#ai_instructions_'+phase_id).val()
             let scored_question = $('#scored_question_'+phase_id).prop('checked');
+            let skip_phase = $('#skip_phase_'+phase_id).prop('checked');
             var rubric = ""
             var minimum_score = 0
             if (scored_question == true)
@@ -181,7 +191,7 @@ function GuidedRubricXBlock(runtime, element) {
             let button_label = $('#button_label_'+phase_id).val()
             block_phases.push({phase_id: phase_id, phase_name:phase_name,phase_question:phase_question,
             helper_text:phase_helper_text, ai_instructions:phase_ai_instructions, 
-            scored_question:scored_question,rubric:rubric,minimum_score:minimum_score,
+            scored_question:scored_question,rubric:rubric,minimum_score:minimum_score,skip_phase:skip_phase,
             button_label:button_label})
             
         });
