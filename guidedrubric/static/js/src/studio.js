@@ -44,14 +44,6 @@ function GuidedRubricXBlock(runtime, element) {
             </div>
 
             <div class="wrapper-rubric">
-                <div class="wrapper-comp-setting">
-                    <label class="label setting-label" for="skip_phase_`+block_last_phase_id+`">Skip Phase</label>
-                    <input type="checkbox" checked class="input setting-input skip_phase" id="skip_phase_`+block_last_phase_id+`"/>
-                </div>
-                <span class="tip setting-help">Skip the phase</span><br>
-            </div>
-
-            <div class="wrapper-rubric">
                 <div id="div_rubric_`+block_last_phase_id+`" class="wrapper-comp-setting" style="display:none">
                     <div>
                         <label class="label setting-label" for="rubric_`+block_last_phase_id+`">Rubric</label>
@@ -96,8 +88,21 @@ function GuidedRubricXBlock(runtime, element) {
                 </div>
             </div>
         </div>
-        <div class="comp-remove-btn">
-            <button type="button" id="phase_remove_btn_`+block_last_phase_id+`" class="phase_remove_btn">remove <span> × </span></button>
+
+        <div class="wrapper-rubric wrapper-rubric-flexbox">
+                <div class="wrapper-comp-setting">
+                    <label class="label setting-label" for="skip_phase_`+block_last_phase_id+`">Skip Phase</label>
+                    <div><span class="tip setting-help">Can Skip Phase</span></div>
+                </div>
+                <div>
+                    <input type="checkbox" checked class="input setting-input skip_phase" id="skip_phase_`+block_last_phase_id+`"/>
+                </div>
+        </div>
+
+        <div class="wrapper-rubric wrapper-rubric-flexbox">
+            <div class="comp-remove-btn">
+                <button type="button" id="phase_remove_btn_`+block_last_phase_id+`" class="phase_remove_btn">remove <span> × </span></button>
+            </div>
         </div>
 
     </li>`;
