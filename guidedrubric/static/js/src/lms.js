@@ -32,9 +32,6 @@ function GuidedRubricXBlock(runtime, element) {
         // Loop through each text area and add event listeners
         textareas.forEach(textarea => {
             // Add a focus event listener to each text area
-            if (textarea.value == 'skip') {
-                textarea.style.height = '52px';    
-            } else {
                 textarea.addEventListener('input', function() {
                     // Reset the height to auto to calculate the correct scrollHeight
                     this.style.height = 'auto';
@@ -43,7 +40,6 @@ function GuidedRubricXBlock(runtime, element) {
                 });
                 // Initialize the textarea height
                 textarea.style.height = textarea.scrollHeight + 'px';
-            }    
         });
     }
 
