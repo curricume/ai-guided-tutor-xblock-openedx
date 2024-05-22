@@ -77,6 +77,9 @@ function GuidedRubricXBlock(runtime, element) {
             loader.style.display = 'none';
             aiMsg.style.setProperty('display', 'flex', 'important');
             if (response.result === 'success') {
+                if (response.response[7] == false) {
+                    $('#skip-btn').css('display', 'none');
+                }
                 if (response.response[1] == "Success" && response.response[2]) {
                     type_message(response.response);
                     keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2])
@@ -86,10 +89,6 @@ function GuidedRubricXBlock(runtime, element) {
                     if (response.response[6]) {
                         $('.micro-ai-btn-container').css('display', '');
                         $('#reset-responses-button').css('display', '');
-                        console.log(response.response[7]);
-                        if (response.response[7] == false) {
-                            $('#skip-btn').css('display', 'none');
-                        }
                         keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2])
                         IncreaseTextAreaHeight()
                     } else{
