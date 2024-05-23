@@ -609,10 +609,21 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
     def reset_user_responses(self, data, suffix=''):
         self.user_response = {}
         self.user_score = {}
-        if self.open_ai_thread_id != '':
-            client.beta.threads.delete(self.open_ai_thread_id)
-            self.open_ai_thread_id = ''
-            session_state['thread_obj'] = None
+        if not self.open_ai_thread_id:
+            print("Thread ID is none or empty")
+            return {"result": "success", "errors": []}
+        try:
+            if self.open_ai_thread_id != '':
+                try:
+                    client.beta.threads.delete(self.open_ai_thread_id)
+                    self.open_ai_thread_id = ''
+                    session_state['thread_obj'] = None
+                except :
+                    self.open_ai_thread_id = ''
+                    session_state['thread_obj'] = None
+            print("Thread deleted successfully")
+        except openai.NotFoundError:
+            print(f"Thread with ID {self.open_ai_thread_id} does not exist")
         return {"result": "success", "errors": []}
 
     def handle_assistant_interaction(self, index, manager, user_input):
