@@ -373,10 +373,6 @@ function GuidedRubricXBlock(runtime, element) {
         document.querySelector('.accordion-item').addEventListener('click', function() {
             this.classList.toggle('open');
         });
-        initial_text_area_height = document.getElementById('chat-msg');
-        if (initial_text_area_height.value == ''){
-        initial_text_area_height.style.height = '52px';
-        }
         /* Here's where you'd do things on page load. */
     });
 }
