@@ -120,10 +120,13 @@ class AssistantManager:
             self.assistant = self.client.beta.assistants.retrieve(
                 assistant_id=AssistantManager.assistant_id
             )
-        if AssistantManager.thread_id:
-            self.thread = self.client.beta.threads.retrieve(
-                thread_id=AssistantManager.thread_id
-            )
+        try:
+            if AssistantManager.thread_id:
+                self.thread = self.client.beta.threads.retrieve(
+                    thread_id=AssistantManager.thread_id
+                )
+        except openai.NotFoundError:
+            pass
 
     def create_assistant(self, name, instructions, tools):
         if not self.assistant:
