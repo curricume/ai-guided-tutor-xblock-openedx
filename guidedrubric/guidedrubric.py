@@ -150,6 +150,16 @@ class AssistantManager:
             return self.thread.id
 
     def add_message_to_thread(self, role, content):
+        try:
+            existing_thread = self.client.beta.threads.retrieve(thread_id=AssistantManager.thread_id)
+            print("existing_thread", existing_thread)
+        except openai.NotFoundError:
+            self.thread_id = ''
+            thread_obj = self.client.beta.threads.create()
+            AssistantManager.thread_id = thread_obj.id
+            self.thread = thread_obj
+            print(f"ThreadID::: {self.thread.id}")
+
         if self.thread:
             self.client.beta.threads.messages.create(
                 thread_id=self.thread.id, role=role, content=content
