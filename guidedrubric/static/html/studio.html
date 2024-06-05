@@ -27,6 +27,7 @@
             <li class="field comp-setting-entry is-set wrapper-rubric-flexbox">
                 <div class="wrapper-comp-setting">
                     <label class="label setting-label" for="display_name">{% trans field_display_name.display_name %}</label>
+                    <div><span class="tip setting-help">{% trans field_display_name.help %}</span></div>
                 </div>
                 <div>
                     <input class="input setting-input" name="display_name" id="display_name" value="{{ guided_rubric_xblock.display_name }}" type="text">
@@ -85,6 +86,7 @@
                         <div class="wrapper-rubric phase-border wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting">
                                 <label class="label setting-label" for="phase_name_{{ block_phase.phase_id }}">Phase Name</label>
+                                <div><span class="tip setting-help">A descriptive word for the phase. This is not used by the application or shown to the user.</span></div>
                             </div>
                             <div>
                                 <input class="input setting-input phase-input-name" id="phase_name_{{ block_phase.phase_id }}"" name="phase_name_{{ block_phase.phase_id }}" value="{{ block_phase.phase_name }}" type="text" required="">
@@ -104,6 +106,7 @@
                         <div class="wrapper-rubric wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting">
                                 <label class="label setting-label" for="helper_text_{{ block_phase.phase_id }}">Helper Text</label>
+                                <div><span class="tip setting-help">Additional helper text to show the user.</span></div>
                             </div>
                             <div>
                                 <input class="input setting-input" id="helper_text_{{ block_phase.phase_id }}"  value="{{ block_phase.helper_text }}" type="text">
@@ -112,7 +115,7 @@
                         <div class="wrapper-rubric wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting" >
                                 <label class="label setting-label" for="ai_instructions_{{ block_phase.phase_id }}">AI Instructions</label>
-                                <div><span class="tip setting-help">The user will give you their name. Welcome them by name.</span></div>
+                                <div><span class="tip setting-help">Instructions submitted to the AI just before the user message is sent</span></div>
                             </div>
                             <div>
                                 <textarea class="input setting-input textarea_ai_instructions" id="ai_instructions_{{ block_phase.phase_id }}"  value="{{ block_phase.ai_instructions }}" type="text">{{ block_phase.ai_instructions }}</textarea>
@@ -131,35 +134,40 @@
                             </div>
                         </div>
 
-                        <div id="div_rubric_{{ block_phase.phase_id }}" class="wrapper-comp-setting" style="{% if not block_phase.scored_question %}display:none;{% endif %}">
-                            <div class="wrapper-rubric">
+                        <div id="div_rubric_{{ block_phase.phase_id }}" class="wrapper-rubric wrapper-rubric-flexbox" style="{% if not block_phase.scored_question %}display:none;{% endif %}">
+                            <div class="wrapper-rubric-flexbox">
                                 <div>
                                     <label class="label setting-label" for="rubric_{{ block_phase.phase_id }}">Rubric</label>
-                                    <textarea class="input setting-input bg-input-field" id="rubric_{{ block_phase.phase_id }}" rows="6" cols="70"  {% if block_phase.scored_question %}required{% endif %}>{{ block_phase.rubric }}</textarea>
+                                    <div><span class="tip setting-help">Can be any human-readable rubric. Short, measurable rubrics are best. </span></div>
+                                    
                                 </div>
-                                <div class="helper-content">
+                                <div>
+                                    <textarea class="input setting-input bg-input-field" id="rubric_{{ block_phase.phase_id }}" rows="6" cols="70"  {% if block_phase.scored_question %}required{% endif %}>{{ block_phase.rubric }}</textarea>
+                                    
+                                    <div class="helper-content">
 
-                                    <p>1. Criteria 1:
-                                    </p><ul>
-                                    <li>2 points - Evidence required to receive two points</li>
-                                    <li>1 point - Evidence required to receive one point</li>
-                                    <li>0 points - Evidence required to receive no points</li>
-                                    </ul>
-                                    <p></p>
-                                    <p>2. Criteria 2:
-                                    </p><ul>
-                                    <li>5 points - Evidence required to receive five points</li>
-                                    <li>3 points - Evidence required to receive three points</li>
-                                    <li>0 points - Evidence required to receive no points</li>
-                                    </ul>
-                                    <p></p>
+                                        <p>1. Criteria 1:
+                                        </p><ul>
+                                        <li>2 points - Evidence required to receive two points</li>
+                                        <li>1 point - Evidence required to receive one point</li>
+                                        <li>0 points - Evidence required to receive no points</li>
+                                        </ul>
+                                        <p></p>
+                                        <p>2. Criteria 2:
+                                        </p><ul>
+                                        <li>5 points - Evidence required to receive five points</li>
+                                        <li>3 points - Evidence required to receive three points</li>
+                                        <li>0 points - Evidence required to receive no points</li>
+                                        </ul>
+                                        <p></p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="wrapper-rubric wrapper-rubric-flexbox">
                                 <div>
                                     <label class="label setting-label" for="minimum_score_{{ block_phase.phase_id }}">Minimum Score</label>
-                                    <div><span class="tip setting-help">This is the minimum total score that a user must achieve to move past
-                                            this phase.</span></div>
+                                    <div><span class="tip setting-help">The minimum score the user must achieve to move on to the next phase
+                                    </span></div>
                                 </div>
                                 <div>
                                     <input class="input setting-input bg-input-field min-score" id="minimum_score_{{ block_phase.phase_id }}" value="{{ block_phase.minimum_score }}">
@@ -175,10 +183,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="wrapper-rubric wrapper-rubric-flexbox">
+                        <div class="wrapper-rubric wrapper-rubric-flexbox">
                             <div class="wrapper-comp-setting">
                                 <label class="label setting-label" for="skip_phase_{{ block_phase.phase_id }}">Skip Phase</label>
-                                <div><span class="tip setting-help">Can Skip Phase</span></div>
+                                <div><span class="tip setting-help">If checked, the user can skip the phase (recommended)</span></div>
                             </div>
                             <div>
                                 <input type="checkbox" {% if block_phase.skip_phase %}checked{% endif %} class="input setting-input skip_phase" id="skip_phase_{{ block_phase.phase_id }}"/>

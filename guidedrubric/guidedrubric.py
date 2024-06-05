@@ -256,14 +256,15 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
     display_name = String(
         display_name = "Display Name",
         default="Guided Rubric",
-        scope=Scope.settings
+        scope=Scope.settings,
+        help=_("The User-Facing Block Title")
     )
 
     short_description =  String(
         display_name=_("Short Description"),
         default="Short Description",
         scope=Scope.settings,
-        help=_("Short Description")
+        help=_("Additional text to be shown underneath the display name")
     )
 
     phases = String(
@@ -320,21 +321,21 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
     assistant_id = String(
         display_name=_("Assistant ID"),
-        help=_("This ID will be auto-generated"),
+        help=_("Generate this ID at OpenAI"),
         default="",
         scope=Scope.settings,
     )
 
     completion_message =  String(
         display_name=_("Completion Message"),
-        help=_("Completion Message"),
+        help=_("A success message to show the student when they’ve completed all phases"),
         default="",
         scope=Scope.settings,
     )
 
     max_tokens_per_user = Integer(
         display_name=_("Max Attempts Per User"),
-        help=_("Max Tokens Per User"),
+        help=_("That maximum number of attempts the student can make. Staff are not limited by max attempts."),
         default=0,
         scope=Scope.settings,
 

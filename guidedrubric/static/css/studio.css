@@ -81,7 +81,6 @@ li.field.dynamic-entry {
 }
 
 .helper-content {
-  margin-left:26%;
   margin-top:1rem
 }
 .helper-content ul {
@@ -209,3 +208,8 @@ input.min-score {
 .submit-input-btn {
   margin-left: -3px !important;
 } 
+
+.modal-lg.modal-editor .modal-content {
+  height: 506px !important;
+  overflow: hidden !important;
+}
