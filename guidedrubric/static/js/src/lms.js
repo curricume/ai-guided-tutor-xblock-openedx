@@ -78,14 +78,14 @@ function GuidedRubricXBlock(runtime, element) {
                 }
                 if (response.response[1] == "Success" && response.response[2]) {
                     type_message(response.response);
-                    keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2])
+                    keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2], response.response[8])
                     IncreaseTextAreaHeight()
                 } 
                 else if (message == "skip" && response.response[2]) {
                     if (response.response[6]) {
                         $('.micro-ai-btn-container').css('display', '');
                         $('#reset-responses-button').css('display', '');
-                        keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2])
+                        keep_user_response(message, $('#last_attempted_phase_id'), response.response[0], response.response[2], response.response[8])
                         IncreaseTextAreaHeight()
                     } else{
                         type_message(response.response);
@@ -122,7 +122,7 @@ function GuidedRubricXBlock(runtime, element) {
             let lastChatMsg = chatMsgs[chatMsgs.length - 1];
 
             if (!lastChatMsg.value.trim()) {
-                alert("You should enter prompt")
+                alert("You should enter response")
                 return;
             }
             var chat_message = lastChatMsg.value;
@@ -150,7 +150,7 @@ function GuidedRubricXBlock(runtime, element) {
     }
 
     function reset_user_responses() {
-        if (confirm("Do you want to reset the responses?")) {
+        if (confirm("Are you sure you want to reset your responses?\nYour current responses will be cleared and you can try again.")) {
             const completion_token = parseInt(document.getElementById('completion_token').value);
             const max_tokens_per_user = parseInt(document.getElementById('max_tokens_per_user').value);
             const is_staff = document.getElementById('is_staff').value === 'True';
@@ -179,16 +179,17 @@ function GuidedRubricXBlock(runtime, element) {
         resetBtn.addEventListener('click', reset_user_responses);
     }
 
-    function keep_user_response(user_input, phase_id, ai_response, attempted_phase_question)
+    function keep_user_response(user_input, phase_id, ai_response, attempted_phase_question, helper_text)
     {
         $('.recent-ai-msg').removeClass('recent-ai-msg');
         var user_response_div = `<div id="chat-logs">
         <p class="questions">`+attempted_phase_question+`</p>
+        <p class="question-helper">`+helper_text+`</p>
             </div>
 
         <div class="chat-input" style="display: block;" id="prompt-with-loader">
             <div id ="chat_input_loader" class="lds-dual-ring" style="display:none"></div><span id="error-msg"></span>
-            <textarea id="chat-msg" class="chat-msg" placeholder="Enter Prompt ... " rows="1" cols="3"></textarea>
+            <textarea id="chat-msg" class="chat-msg" placeholder="Enter Response ... " rows="1" cols="3"></textarea>
         </div>
         <div id="ai-msg" class="ai-msg recent-ai-msg"><div class="icon-bar">
             🤖

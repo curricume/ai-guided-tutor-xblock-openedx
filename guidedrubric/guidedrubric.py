@@ -371,7 +371,8 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
             phase = self.get_phase(int(phase_id))
             if phase:
                 question = phase['phase_question']
-                user_response.update({int(phase_id): {'question': question, 'response': response}})
+                helper_text = phase['helper_text']
+                user_response.update({int(phase_id): {'question': question, 'helper_text':helper_text, 'response': response}})
         
         return user_response
 
@@ -567,7 +568,9 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
             next_question = self.get_next_question()
 
         phase = self.get_phase(self.last_attempted_phase_id)
+        print("=---->>>", phase)
         phase_skip = phase.get('skip_phase', False) if phase else False
+        helper_text = phase.get('helper_text', '') if phase else 'test'
         button_label = ''
         if phase:
             button_label = phase['button_label']
@@ -575,6 +578,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         lms_context = {
             "guided_rubric_xblock": self,
             "next_question": next_question,
+            "helper_text": helper_text,
             'user_response_details': self.user_response_details(),
             "button_label" : button_label,
             'is_user_staff':is_user_staff,
@@ -585,6 +589,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
             "user_score": self.user_score,
             "skip_phase": phase_skip,
         }
+        print(lms_context)
         lms_context.update(context or {})
         template = self.render_template("static/html/lms.html", lms_context)
         frag = Fragment(template)
@@ -719,15 +724,17 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
             try:
                 phase = self.get_phase(self.last_attempted_phase_id)
                 question = phase['phase_question']
+                helper_text = phase['helper_text']
                 button_label = phase['button_label']
                 next_phase_skip = phase.get('skip_phase', False) if phase else False
             except:
                 question = None
+                helper_text = None
                 button_label = None
                 next_phase_skip = None
             messages_to_send = ai_messages.copy()
             ai_messages.clear()
-        return hand_intr, hand_gra, question, button_label, messages_to_send, self.completion_message, phase_skip, next_phase_skip
+        return hand_intr, hand_gra, question, button_label, messages_to_send, self.completion_message, phase_skip, next_phase_skip, helper_text
 
     # TO-DO: change this handler to perform your own actions.  You may need more
     # than one handler, or you may not need any handlers at all.

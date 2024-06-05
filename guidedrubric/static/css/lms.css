@@ -388,6 +388,31 @@ input#completion_token,input#max_tokens_per_user {
     background: none;
     margin-left:-15px
 }
+#chatbox-history h2 {
+    font-weight: bold;
+    color: #000;
+    font-size: 1.2rem;
+    margin: 40px 0 10px;
+}
+#chatbox-history h3 {
+    font-size: 1rem;
+    color: #000;
+}
+.content-wrapper .chatbox h3{
+    margin: 0 0 20px;
+}
+.content-wrapper .chatbox span {
+    border-bottom: 1px solid #000;
+    padding: 0 0 2px;
+}
+.content-wrapper .chatbox .questions {
+    margin-bottom: 0;
+}
+.content-wrapper .chatbox .question-helper {
+    margin: 0 0 20px;
+    font-size: 0.8rem;
+    line-height: 1;
+}
 @media (max-width: 767px){
     .ai-msg{
         flex-direction: column;

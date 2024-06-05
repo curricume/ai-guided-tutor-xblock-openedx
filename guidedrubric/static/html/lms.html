@@ -86,13 +86,13 @@
                         {% if is_user_staff %}
                             <h2>Scores:</h2>
                             {% for phase, score in user_score.items %}
-                                <h3>Question {{forloop.counter}} Score: {{score}}</h3>
-                                ------------------------------
+                                <h3><span>Phase {{forloop.counter}} Score: <strong>{{score}}</strong></span></h3>
                             {% endfor %}
                         {% endif %}
                             {% if is_initial_phase %}
-                                <div id="chat-logs">
+                                <div id="chat-logs" class="with-helper-text">
                                     <p class="questions">{{ next_question }}</p>
+                                    <p class="question-helper">{{ helper_text }}</p>
                                 </div>
 
                                 <div class="chat-input" style="display: block;" id="prompt-with-loader">
@@ -107,6 +107,7 @@
                                     {% if phase_id == last_attempted_phase_id and not is_last_phase_successful %}
                                             <div id="chat-logs">
                                                 <p class="questions">{{ response.question }}</p>
+                                                <p class="question-helper">{{ response.helper_text }}</p>
                                             </div>
 
                                             <div class="chat-input" style="display: block;" id="prompt-with-loader">
@@ -121,6 +122,7 @@
                                     {% else %}
                                             <div id="chat-history">
                                                 <p class="questions">{{ response.question }}</p>
+                                                <div class="question-helper"> {{ response.helper_text }} </div>
                                             </div>
                                             
                                             
@@ -140,11 +142,12 @@
                             {% if not is_initial_phase and next_question %}
                                 <div id="chat-logs">
                                     <p class="questions">{{ next_question }}</p>
+                                    <p class="question-helper">{{ helper_text }}</p>
                                 </div>
 
                                 <div class="chat-input" style="display: block;" id="prompt-with-loader">
                                     <div id ="chat_input_loader" class="lds-dual-ring" style="display:none"></div><span id="error-msg"></span>
-                                    <textarea id="chat-msg" class="chat-msg"  placeholder="Enter Prompt ... " rows="1" cols="3"></textarea>
+                                    <textarea id="chat-msg" class="chat-msg"  placeholder="Enter Response ... " rows="1" cols="3"></textarea>
                                 </div>
                                 <div id="ai-msg-{{ phase_id }}" class="ai-msg recent-ai-msg">
                                     <div class="icon-bar">
@@ -163,14 +166,14 @@
                             {% endif %}
                         </div>
                         {% endif %}
-                        <div class="micro-ai-btn-primary">
-                        <button id="reset-responses-button">Reset Responses</button>
-                        </div>
                     </div>
                 </div>
                 {% if not last_attempted_phase_id %}
                     <p class="notification-btm">{{guided_rubric_xblock.completion_message}}</p>
                 {% endif %}
+                <div class="micro-ai-btn-primary">
+                    <button id="reset-responses-button">Reset Responses</button>
+                </div>
             </div>
         </div>
     </div>
