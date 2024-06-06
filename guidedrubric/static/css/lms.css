@@ -413,6 +413,12 @@ input#completion_token,input#max_tokens_per_user {
     font-size: 0.8rem;
     line-height: 1;
 }
+.micro-ai-btn-primary {
+    margin: 10px 0;
+}
+.scorm-reports {
+    margin: 40px 0 0 14px;
+}
 @media (max-width: 767px){
     .ai-msg{
         flex-direction: column;

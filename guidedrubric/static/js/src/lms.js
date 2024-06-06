@@ -97,7 +97,9 @@ function GuidedRubricXBlock(runtime, element) {
                     let p = document.createElement('p');
                     p.classList.add('notification-btm');
                     p.textContent = response.response[5];
-                    document.querySelectorAll('.chatgpt_wrapper')[document.querySelectorAll('.chatgpt_wrapper').length - 1].appendChild(p);
+                    let microAIBtnPrimary = document.querySelector('.micro-ai-btn-primary');
+                    let chatWrapper = microAIBtnPrimary.parentElement;
+                    chatWrapper.insertBefore(p, microAIBtnPrimary);
                 } else {
                     type_message(response.response);
                 }
@@ -330,8 +332,10 @@ function GuidedRubricXBlock(runtime, element) {
                     $('#reset-responses-button').css('display', '');
                     let p = document.createElement('p');
                     p.classList.add('notification-btm');
-                    p.textContent = data[5];
-                    document.querySelectorAll('.chatgpt_wrapper')[document.querySelectorAll('.chatgpt_wrapper').length - 1].appendChild(p);
+                    p.textContent = data[5];                   
+                    let microAIBtnPrimary = document.querySelector('.micro-ai-btn-primary');
+                    let chatWrapper = microAIBtnPrimary.parentElement;
+                    chatWrapper.insertBefore(p, microAIBtnPrimary);
                 } else {
                     $('.chat-input').css('display', 'block');
                     $('.micro-ai-btn-container').css('display', '');
@@ -342,7 +346,9 @@ function GuidedRubricXBlock(runtime, element) {
                         p.textContent = "You have not achieved a passing score for this phase. Please enter another response and submit again.";
                         p.style.color = 'black';
                         p.style.backgroundColor = '#ff000052';
-                        document.querySelectorAll('.chatgpt_wrapper')[document.querySelectorAll('.chatgpt_wrapper').length - 1].appendChild(p);
+                        let microAIBtnPrimary = document.querySelector('.micro-ai-btn-primary');
+                        let chatWrapper = microAIBtnPrimary.parentElement;
+                        chatWrapper.insertBefore(p, microAIBtnPrimary);
                     }
                 }
             }

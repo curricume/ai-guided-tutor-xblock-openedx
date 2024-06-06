@@ -48,7 +48,7 @@ function GuidedRubricXBlock(runtime, element) {
     sendBtn.addEventListener('click', function() {
         let status = document.createElement('div');
         if (!chatMsg.value.trim()) {
-            errorMsg.textContent = "You should enter prompt";
+            errorMsg.textContent = "You should enter response";
             return;
         }
         document.querySelector('.chat-input').style.display = 'none';
