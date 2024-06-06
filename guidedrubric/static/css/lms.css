@@ -419,6 +419,14 @@ input#completion_token,input#max_tokens_per_user {
 .scorm-reports {
     margin: 40px 0 0 14px;
 }
+.wrapper-content .chatbox .questions {
+    margin-bottom: 0;
+}
+.wrapper-content .chatbox .question-helper {
+margin: 0 0 20px;
+font-size: 0.8rem;
+line-height: 1;
+}
 @media (max-width: 767px){
     .ai-msg{
         flex-direction: column;
