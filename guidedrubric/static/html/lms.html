@@ -171,7 +171,7 @@
                 {% if not last_attempted_phase_id %}
                     <p class="notification-btm">{{guided_rubric_xblock.completion_message}}</p>
                 {% endif %}
-                {% if is_user_staff or guided_rubric_xblock.max_tokens_per_user >= guided_rubric_xblock.completion_token %}
+                {% if is_user_staff or guided_rubric_xblock.max_tokens_per_user > guided_rubric_xblock.completion_token %}
                     <div class="micro-ai-btn-primary">
                         <button id="reset-responses-button" class="btn-ghost">Reset Responses</button>
                     </div>
