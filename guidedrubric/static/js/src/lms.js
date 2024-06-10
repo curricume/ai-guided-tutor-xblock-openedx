@@ -44,11 +44,13 @@ function GuidedRubricXBlock(runtime, element) {
     }
 
     function send_message(message) {
-        const completion_token = parseInt(document.getElementById('completion_token').value);
-        const max_tokens_per_user = parseInt(document.getElementById('max_tokens_per_user').value);
+        const completion_token_input = document.getElementById('completion_token');
+        const max_tokens_per_user_input = document.getElementById('max_tokens_per_user');
+        const completion_token = completion_token_input ? completion_token_input.value : 0;
+        const max_tokens_per_user = max_tokens_per_user_input ? max_tokens_per_user_input.value : 0;
         const is_staff = document.getElementById('is_staff').value === 'True';
 
-        if(completion_token >= max_tokens_per_user && !is_staff){
+        if(max_tokens_per_user != 0 && completion_token >= max_tokens_per_user && !is_staff){
             alert("You have exceeded the allowed number of tokens. Please contact the course staff")
         }
         else{
@@ -153,10 +155,13 @@ function GuidedRubricXBlock(runtime, element) {
 
     function reset_user_responses() {
         if (confirm("Are you sure you want to reset your responses?\nYour current responses will be cleared and you can try again.")) {
-            const completion_token = parseInt(document.getElementById('completion_token').value);
-            const max_tokens_per_user = parseInt(document.getElementById('max_tokens_per_user').value);
+            const completion_token_input = document.getElementById('completion_token');
+            const max_tokens_per_user_input = document.getElementById('max_tokens_per_user');
+            const completion_token = completion_token_input ? completion_token_input.value : 0;
+            const max_tokens_per_user = max_tokens_per_user_input ? max_tokens_per_user_input.value : 0;
+    
             const is_staff = document.getElementById('is_staff').value === 'True';
-            if (!is_staff && completion_token >= max_tokens_per_user) {
+            if (max_tokens_per_user != 0 && !is_staff && completion_token >= max_tokens_per_user) {
                 alert("You cannot reset responses because you have exceeded the maximum number of tokens.");
                 return;
             }
