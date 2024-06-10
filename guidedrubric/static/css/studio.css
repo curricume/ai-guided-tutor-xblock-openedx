@@ -213,3 +213,6 @@ input.min-score {
   height: 506px !important;
   overflow: hidden !important;
 }
+.helper-content label {
+  font-weight: 600;
+}

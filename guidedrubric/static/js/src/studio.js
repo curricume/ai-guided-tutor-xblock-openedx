@@ -45,26 +45,29 @@ function GuidedRubricXBlock(runtime, element) {
 
             <div class="wrapper-rubric">
                 <div id="div_rubric_`+block_last_phase_id+`" class="wrapper-comp-setting" style="display:none">
-                    <div>
-                        <label class="label setting-label" for="rubric_`+block_last_phase_id+`">Rubric</label>
-                        <textarea class="input bg-input-field setting-input" id="rubric_`+block_last_phase_id+`" rows="6" cols="70"></textarea>
-                    </div>
-                    <div class="helper-content">
-                        <p>1. Criteria 1:
-                        </p><ul>
-                        <li>2 points - Evidence required to receive two points</li>
-                        <li>1 point - Evidence required to receive one point</li>
-                        <li>0 points - Evidence required to receive no points</li>
-                        </ul>
-                        <p></p>
-
-                        <p>2. Criteria 2:
-                        </p><ul>
-                        <li>5 points - Evidence required to receive five points</li>
-                        <li>3 points - Evidence required to receive three points</li>
-                        <li>0 points - Evidence required to receive no points</li>
-                        </ul>
-                        <p></p>
+                    <div class="wrapper-rubric-flexbox">
+                        <div>
+                            <label class="label setting-label" for="rubric_`+block_last_phase_id+`">Rubric</label>
+                            <div><span class="tip setting-help">Can be any human-readable rubric. Short, measurable rubrics are best. </span></div>
+                            <div class="helper-content">
+                                <label>Sample Rubric:</label>
+                                <p>1. Criteria 1:
+                                </p><ul>
+                                <li>2 points - Evidence required to receive two points</li>
+                                <li>1 point - Evidence required to receive one point</li>
+                                <li>0 points - Evidence required to receive no points</li>
+                                </ul>
+                                <p></p>
+                                <p>2. Criteria 2:
+                                </p><ul>
+                                <li>5 points - Evidence required to receive five points</li>
+                                <li>3 points - Evidence required to receive three points</li>
+                                <li>0 points - Evidence required to receive no points</li>
+                                </ul>
+                                <p></p>
+                            </div>
+                        </div>
+                        <div> <textarea class="input bg-input-field setting-input" id="rubric_`+block_last_phase_id+`" rows="12" cols="70"></textarea> </div>
                     </div>
                 </div>
                 <div class="wrapper-rubric wrapper-rubric-flexbox phase-border" id="minimum_score_`+block_last_phase_id+`">

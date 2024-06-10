@@ -335,7 +335,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
     max_tokens_per_user = Integer(
         display_name=_("Max Attempts Per User"),
-        help=_("That maximum number of attempts the student can make. Staff are not limited by max attempts."),
+        help=_("That maximum number of attempts the student can make. Blank or '0' value here will allow unlimited attempts. Please be wary of cost implications of allowing unlimited attempts. Staff are not limited by max attempts."),
         default=0,
         scope=Scope.settings,
 

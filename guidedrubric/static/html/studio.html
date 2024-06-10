@@ -139,13 +139,8 @@
                                 <div>
                                     <label class="label setting-label" for="rubric_{{ block_phase.phase_id }}">Rubric</label>
                                     <div><span class="tip setting-help">Can be any human-readable rubric. Short, measurable rubrics are best. </span></div>
-                                    
-                                </div>
-                                <div>
-                                    <textarea class="input setting-input bg-input-field" id="rubric_{{ block_phase.phase_id }}" rows="6" cols="70"  {% if block_phase.scored_question %}required{% endif %}>{{ block_phase.rubric }}</textarea>
-                                    
                                     <div class="helper-content">
-
+                                        <label>Sample Rubric:</label>
                                         <p>1. Criteria 1:
                                         </p><ul>
                                         <li>2 points - Evidence required to receive two points</li>
@@ -161,6 +156,9 @@
                                         </ul>
                                         <p></p>
                                     </div>
+                                </div>
+                                <div>
+                                    <textarea class="input setting-input bg-input-field" id="rubric_{{ block_phase.phase_id }}" rows="12" cols="70"  {% if block_phase.scored_question %}required{% endif %}>{{ block_phase.rubric }}</textarea>
                                 </div>
                             </div>
                             <div class="wrapper-rubric wrapper-rubric-flexbox">
