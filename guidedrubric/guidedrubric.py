@@ -765,7 +765,13 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
             user_response[phase_id] = phase_response
             self.user_response = user_response
 
-        self.completion_token += 1
+
+        all_phases = self.block_phases
+        first_phase = int(all_phases[0]["phase_id"])
+
+        if(phase_id == first_phase):
+            self.completion_token += 1
+        
         attempted_phase_is_last = False
         if response_metadata['attempted_phase_id'] == int(self.last_phase_id):
             attempted_phase_is_last = True
