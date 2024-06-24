@@ -12,6 +12,13 @@
             </div>
         </div>
     </div>
+
+    <div class="chatgpt_block">
+        <div class="chatbox">
+            <input type="hidden" id="phasesLength" value="{{ guided_rubric_xblock.phasesLength }}">
+        </div>
+    </div>
+
 </div>
 <div class="gudied-critical-analysis-container">
         <div class="guided-critical-analysis-header">
@@ -88,7 +95,13 @@
                         {% if is_user_staff %}
                             <h2>Scores:</h2>
                             {% for phase, score in user_score.items %}
-                                <h3><span>Phase {{forloop.counter}} Score: <strong>{{score}}</strong></span></h3>
+                                {% if score == -999 %}
+                                    <h3><span>Phase {{ phase }} Score: <strong>Un Scored</strong></span></h3>
+
+                                {% else %}
+                                    <h3><span>Phase {{ phase }} Score: <strong>{{ score }}</strong></span></h3>
+                                
+                                {% endif %} 
                             {% endfor %}
                         {% endif %}
                             {% if is_initial_phase %}
@@ -173,10 +186,16 @@
                 {% if not last_attempted_phase_id %}
                     <p class="notification-btm">{{guided_rubric_xblock.completion_message}}</p>
                 {% endif %}
-                {% if is_user_staff or not guided_rubric_xblock.max_tokens_per_user or guided_rubric_xblock.max_tokens_per_user > guided_rubric_xblock.completion_token %}
+                {% if is_user_staff %}
                     <div class="micro-ai-btn-primary">
                         <button id="reset-responses-button" class="btn-ghost">Reset Responses</button>
                     </div>
+                {% else %}
+                    {% if not guided_rubric_xblock.max_tokens_per_user or guided_rubric_xblock.max_tokens_per_user > guided_rubric_xblock.completion_token %}
+                        <div class="micro-ai-btn-primary">
+                            <button id="reset-responses-button" class="btn-ghost">Reset Responses</button>
+                        </div>
+                    {% endif %}        
                 {% endif %}
             </div>
         </div>

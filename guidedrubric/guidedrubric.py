@@ -346,6 +346,13 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         default={},
     )
 
+    attempted_first = Boolean(
+        default=True,
+        scope=Scope.user_state,
+        help=_("Track if the first phase has been responded to.")
+    )
+
+
     is_last_phase_successful = Boolean(default=True, scope=Scope.user_state)
 
 
@@ -551,6 +558,11 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         is_initial_phase = True
         if len(self.user_response.keys()) > 0:
             is_initial_phase = False
+            self.attempted_first = False
+
+        if(is_initial_phase):
+            self.attempted_first = True
+        
         user_service = self.runtime.service(self, 'user')
         xb_user = user_service.get_current_user()
         user_role = xb_user.opt_attrs['edx-platform.user_is_staff']
@@ -616,6 +628,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
     @XBlock.json_handler
     def reset_user_responses(self, data, suffix=''):
+        self.attempted_first = True
         self.user_response = {}
         self.user_score = {}
         if not self.open_ai_thread_id:
@@ -674,7 +687,7 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
         if not phase['scored_question']:
             self.last_attempted_phase_id = self.get_next_phase_id()
             self.is_last_phase_successful = True
-            self.user_score[str(current_phase_id)] = 1
+            self.user_score[str(current_phase_id)] = -999
             return "Success"
         instructions = self.build_instructions(index, True)
         manager.run_assistant(instructions, True)
@@ -694,6 +707,9 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
 
     def handle_skip(self):
+        phase = self.get_phase(self.last_attempted_phase_id)
+        current_phase_id = phase['phase_id']
+        self.user_score[str(current_phase_id)] = -999
         self.last_attempted_phase_id = self.get_next_phase_id()
         self.is_last_phase_successful = True
 
@@ -738,40 +754,40 @@ class GuidedRubricXBlock(XBlock, CompletableXBlockMixin):
 
     # TO-DO: change this handler to perform your own actions.  You may need more
     # than one handler, or you may not need any handlers at all.
+
     @XBlock.json_handler
     def send_message(self, data, suffix=""):
         """Send message to OpenAI, and return the response"""
+        phasesLength = len(self.block_phases)
 
         phase = self.get_phase(self.last_attempted_phase_id)
         phase_skip = phase.get('skip_phase', False) if phase else False
         response_metadata = {'attempted_phase_id': self.last_attempted_phase_id, 'attempted_phase_question':\
-        phase['phase_question']}
+        phase['phase_question'], 'next_phase_id': self.get_next_phase_id(), 'total_phases': phasesLength}
         self.user_response[self.last_attempted_phase_id] = data['message']
         user_input = data['message']
         phase_id = int(self.last_attempted_phase_id)
         res = self.handle_interaction(user_input, phase_skip)
-        if self.user_response.get(phase_id):
-            user_response = self.user_response
-            phase_response = {}
-            phase_response['user_response'] = data['message']
-            phase_response['ai_response'] = res[0]
-            user_response[phase_id] = phase_response
-            self.user_response = user_response
-        else:
-            user_response = self.user_response
-            phase_response = {}
-            phase_response['user_response'] = data['message']
-            phase_response['ai_response'] = res[0]
-            user_response[phase_id] = phase_response
-            self.user_response = user_response
+            
+        user_response = self.user_response
+        phase_response = {}
+        phase_response['user_response'] = data['message']
+        phase_response['ai_response'] = res[0]
+        user_response[phase_id] = phase_response
+        self.user_response = user_response
 
 
         all_phases = self.block_phases
         first_phase = int(all_phases[0]["phase_id"])
 
         if(phase_id == first_phase):
-            self.completion_token += 1
+            if(self.attempted_first):
+                print("first_phase_first_attempt")
+                self.attempted_first = False
+                self.completion_token += 1
         
+        else:
+            self.attempted_first = True        
         attempted_phase_is_last = False
         if response_metadata['attempted_phase_id'] == int(self.last_phase_id):
             attempted_phase_is_last = True

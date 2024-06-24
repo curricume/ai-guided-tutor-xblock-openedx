@@ -43,6 +43,35 @@ function GuidedRubricXBlock(runtime, element) {
         });
     }
 
+    let counter = parseInt(localStorage.getItem('counter')) || 0;
+    let phasesLength = parseInt(localStorage.getItem('phasesLength')) || 0;
+
+    function resetCounterAndPhasesLength(){
+        
+        counter = 0;
+        phasesLength = 0;
+        localStorage.setItem('counter', counter);
+        localStorage.setItem('phasesLength', phasesLength);
+    }
+
+    function checkPageReload() {
+        
+        if (!sessionStorage.getItem('reloaded')) {
+            sessionStorage.setItem('reloaded', 'true');
+        } else {
+            const completion_token = parseInt(document.getElementById('completion_token').value) || 0;
+            const max_tokens_per_user = parseInt(document.getElementById('max_tokens_per_user').value) || 0;
+            
+            if (max_tokens_per_user > completion_token) {
+                resetCounterAndPhasesLength();
+            }
+        }
+    }
+
+    window.onload = function() {
+        checkPageReload();
+      };      
+
     function send_message(message) {
         const completion_token_input = document.getElementById('completion_token');
         const max_tokens_per_user_input = document.getElementById('max_tokens_per_user');
@@ -50,10 +79,20 @@ function GuidedRubricXBlock(runtime, element) {
         const max_tokens_per_user = max_tokens_per_user_input ? max_tokens_per_user_input.value : 0;
         const is_staff = document.getElementById('is_staff').value === 'True';
 
-        if(max_tokens_per_user != 0 && completion_token >= max_tokens_per_user && !is_staff){
-            alert("You have exceeded the allowed number of tokens. Please contact the course staff")
-        }
-        else{
+        phasesLength = parseInt(document.getElementById('phasesLength').value) || phasesLength;
+        localStorage.setItem('phasesLength', phasesLength);
+
+        const savedCounter = parseInt(localStorage.getItem('counter')) || 0;
+        const savedPhasesLength = parseInt(localStorage.getItem('phasesLength')) || 1;
+
+        if (max_tokens_per_user != 0 && completion_token >= max_tokens_per_user && !is_staff && savedCounter >= savedPhasesLength) {
+        
+            alert("You have exceeded the allowed number of tokens. Please contact the course staff");
+
+        } else {
+
+        counter += 1;
+        localStorage.setItem('counter', counter);
 
         if (is_excercise_finished() == true)
         {
@@ -109,6 +148,9 @@ function GuidedRubricXBlock(runtime, element) {
                 $('#completion_token').val(completion_token)
                 $('#attempts').text(completion_token)
                 attempted_phase_is_last = response.response_metadata['attempted_phase_is_last']
+                phasesLength = response.response_metadata['total_phases'];
+                $('#phasesLength').val(phasesLength);
+                localStorage.setItem('phasesLength', phasesLength);
                 is_attempted_phase_successful = response.response_metadata['is_attempted_phase_successful']
             } else {
                 // alert("You've reached the end of the exercise. Hope you learned something!");
@@ -117,7 +159,8 @@ function GuidedRubricXBlock(runtime, element) {
         }).fail(function(error) {
             console.log("An error occurred: ", error);
         });
-    }};
+    }      
+};
 
     if (sendBtn != null)
     {
@@ -154,34 +197,37 @@ function GuidedRubricXBlock(runtime, element) {
     }
 
     function reset_user_responses() {
-        if (confirm("Are you sure you want to reset your responses?\nYour current responses will be cleared and you can try again.")) {
-            const completion_token_input = document.getElementById('completion_token');
-            const max_tokens_per_user_input = document.getElementById('max_tokens_per_user');
-            const completion_token = completion_token_input ? completion_token_input.value : 0;
-            const max_tokens_per_user = max_tokens_per_user_input ? max_tokens_per_user_input.value : 0;
+        let completion_token_input = document.getElementById('completion_token');
+        let max_tokens_per_user_input = document.getElementById('max_tokens_per_user');
+        let completion_token = completion_token_input ? parseInt(completion_token_input.value) : 0;
+        let max_tokens_per_user = max_tokens_per_user_input ? parseInt(max_tokens_per_user_input.value) : 0;
+        let is_staff = document.getElementById('is_staff').value === 'True';
+
+        if (max_tokens_per_user !== 0 && completion_token >= max_tokens_per_user && !is_staff) {
     
-            const is_staff = document.getElementById('is_staff').value === 'True';
-            if (max_tokens_per_user != 0 && !is_staff && completion_token >= max_tokens_per_user) {
-                alert("You cannot reset responses because you have exceeded the maximum number of tokens.");
-                return;
+            alert("You cannot reset responses because you have exceeded the maximum number of tokens.");
+            return;
+            
+        } else {
+            if (confirm("Are you sure you want to reset your responses?\nYour current responses will be cleared and you can try again.")) {
+                $.ajax({
+                    type: "POST",
+                    url: resetHandlerUrl,
+                    data: JSON.stringify({}),
+                    contentType: "application/json",
+                    success: function (result) {
+                        alert("Responses have been reset. Please refresh the page.");
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error("Error resetting responses:", error);
+                        alert("An error occurred while resetting responses.");
+                    }
+                });
             }
-            $.ajax({
-                type: "POST",
-                url: resetHandlerUrl,
-                data: JSON.stringify({}),
-                contentType: "application/json",
-                success: function (result) {
-                    alert("Responses have been reset. Please refresh the page.");
-                    location.reload();
-                },
-                error: function (error) {
-                    console.error("Error resetting responses:", error);
-                    alert("An error occurred while resetting responses.");
-                }
-            });
         }
     }
-
+    
     if (resetBtn != null) {
         resetBtn.addEventListener('click', reset_user_responses);
     }
